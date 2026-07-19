@@ -14,3 +14,6 @@ node_modules/
 
 # Local server config used during development
 .claude/launch.json
+
+# Local tooling state, not project config
+.claude/
