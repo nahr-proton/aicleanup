@@ -1,0 +1,12 @@
+# Files that live in the repository but should not be served as part of the
+# site. Everything else in the root is public by design.
+
+# Repository and deployment metadata
+README.md
+wrangler.jsonc
+.gitignore
+.assetsignore
+
+# Local build tool for the social share images. Not needed in production, and
+# excluding it is cleaner than relying on robots.txt and a noindex tag.
+_dev

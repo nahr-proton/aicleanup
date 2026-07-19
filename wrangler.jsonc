@@ -1,0 +1,20 @@
+{
+  // Cloudflare Workers static assets. There is no Worker script and no build
+  // step: this project is a directory of static files, served from the edge.
+  //
+  // "main" is deliberately absent. An assets-only Worker needs no code, and
+  // adding any would mean the _headers rules stop applying to those responses.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "aicleanup",
+  "compatibility_date": "2025-09-01",
+
+  "assets": {
+    // The repository root is the site root.
+    "directory": "./",
+
+    // Serve 404.html with a real 404 status for unknown paths, rather than
+    // falling back to index.html, which would make every typo look like the
+    // home page to both people and crawlers.
+    "not_found_handling": "404-page"
+  }
+}
