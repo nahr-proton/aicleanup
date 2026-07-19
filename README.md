@@ -102,7 +102,7 @@ closer to make them live.
 ## Social share images
 
 `_dev/og-generator.html` draws the Open Graph cards at 1200x630 and downloads
-them as PNGs. Open it, click the button, move the files into `assets/img/`.
+them as JPEGs. Open it, click the button, move the files into `assets/img/`.
 
 The pages already reference these filenames, so until they exist the social
 previews fall back to text only. Add a card to the `CARDS` array when a new

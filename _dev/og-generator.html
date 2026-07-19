@@ -26,7 +26,7 @@
   <h1>Open Graph image generator</h1>
   <p>
     A local build tool, not part of the site. It draws the social share cards
-    at full 1200x630 resolution and downloads them as PNGs. Click the button,
+    at full 1200x630 resolution and downloads them as JPEGs. Click the button,
     then move the five files into <code>/assets/img/</code>.
   </p>
   <p>
@@ -86,18 +86,36 @@ function drawCard(title, subtitle) {
     return out;
   }
 
+  /* Layout constants chosen so the worst realistic case, a two line title
+     with a three line subtitle, still clears the footer rule. Earlier values
+     let a two line subtitle run straight through it. */
+  var TITLE_SIZE = 72, TITLE_LH = 84;
+  var SUB_SIZE = 33, SUB_LH = 44;
+  var TITLE_TOP = ly + s + 78;      /* first title baseline */
+  var TITLE_TO_SUB = 56;            /* last title baseline to first subtitle */
+  var RULE_Y = H - M - 52;
+
   x.fillStyle = '#171717';
-  x.font = '600 76px ' + SANS;
-  var lines = wrap(title, W - M * 2), ty = ly + s + 100;
-  lines.forEach(function (l, i) { x.fillText(l, M, ty + i * 88); });
+  x.font = '600 ' + TITLE_SIZE + 'px ' + SANS;
+  var lines = wrap(title, W - M * 2);
+  lines.forEach(function (l, i) { x.fillText(l, M, TITLE_TOP + i * TITLE_LH); });
 
   x.fillStyle = '#5c5a57';
-  x.font = '400 34px ' + SANS;
-  var sy = ty + lines.length * 88 + 16;
-  wrap(subtitle, W - M * 2 - 40).forEach(function (l, i) { x.fillText(l, M, sy + i * 46); });
+  x.font = '400 ' + SUB_SIZE + 'px ' + SANS;
+  var subLines = wrap(subtitle, W - M * 2 - 40);
+  var sy = TITLE_TOP + (lines.length - 1) * TITLE_LH + TITLE_TO_SUB;
+  subLines.forEach(function (l, i) { x.fillText(l, M, sy + i * SUB_LH); });
+
+  /* Guard rail: if a future title or subtitle ever grows past the rule, this
+     says so loudly in the console rather than shipping a broken card. */
+  var lastBaseline = sy + (subLines.length - 1) * SUB_LH;
+  if (lastBaseline > RULE_Y - 20) {
+    console.warn('OG card "' + title + '": text overruns the footer rule by ' +
+                 Math.ceil(lastBaseline - (RULE_Y - 20)) + 'px. Shorten it.');
+  }
 
   x.strokeStyle = '#e8e5e1'; x.lineWidth = 1;
-  x.beginPath(); x.moveTo(M, H - M - 52); x.lineTo(W - M, H - M - 52); x.stroke();
+  x.beginPath(); x.moveTo(M, RULE_Y); x.lineTo(W - M, RULE_Y); x.stroke();
 
   x.fillStyle = '#8f8c88'; x.font = '500 28px ' + SANS;
   x.fillText('aicleanup.tools', M, H - M - 8);
@@ -110,17 +128,23 @@ function drawCard(title, subtitle) {
 
 /* filename, title, subtitle */
 var CARDS = [
-  ['og-home.png', 'Free tools that clean up AI text',
+  ['og-home.jpg', 'Free tools that clean up AI text',
    'Markdown tables to Excel, AI text to Word, and an em dash remover.'],
-  ['og-markdown-table-to-excel.png', 'Markdown Table to Excel',
+  ['og-markdown-table-to-excel.jpg', 'Markdown Table to Excel',
    'Paste a ChatGPT table, download a real .xlsx or .csv.'],
-  ['og-ai-text-to-word.png', 'AI Text to Word',
+  ['og-ai-text-to-word.jpg', 'AI Text to Word',
    'Turn markdown into a .docx with real headings, lists and tables.'],
-  ['og-em-dash-remover.png', 'Em Dash Remover',
+  ['og-em-dash-remover.jpg', 'Em Dash Remover',
    'Strip em dashes, smart quotes and invisible characters.'],
-  ['og-default.png', 'AI Output Cleanup',
+  ['og-default.jpg', 'AI Output Cleanup',
    'Small, free, private tools for AI generated text.']
 ];
+
+/* JPEG rather than PNG. The same card as a PNG is around 460KB because of the
+   background gradient, and some chat clients skip link previews that large.
+   At this quality the text stays crisp and the file drops to roughly 50KB. */
+var FORMAT = 'image/jpeg';
+var QUALITY = 0.92;
 
 var previews = document.getElementById('previews');
 var canvases = [];
@@ -150,7 +174,8 @@ document.getElementById('download-all').addEventListener('click', function () {
         a.click();
         document.body.removeChild(a);
         setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
-      }, 'image/png');
+        console.log(entry[0] + ': ' + Math.round(blob.size / 1024) + 'KB');
+      }, FORMAT, QUALITY);
     }, i * 400);
   });
 });
