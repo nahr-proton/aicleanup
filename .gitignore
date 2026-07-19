@@ -1,0 +1,16 @@
+# OS cruft
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Nothing here needs a build step, but keep these out just in case
+node_modules/
+*.log
+
+# Local server config used during development
+.claude/launch.json

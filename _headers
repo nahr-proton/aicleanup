@@ -1,0 +1,47 @@
+# Cloudflare Pages headers.
+# Applied at the edge; no effect on the local dev server.
+
+/*
+  # Content Security Policy. Every origin below is one this site actually
+  # uses. There are no inline scripts or inline styles anywhere in the site,
+  # which is why 'unsafe-inline' is absent and should stay absent.
+  #
+  #   cdnjs.cloudflare.com  SheetJS, loaded on demand for .xlsx downloads
+  #   cdn.jsdelivr.net      docx, loaded on demand for .docx downloads
+  #   cloud.umami.is        cookieless analytics
+  #
+  # WHEN ENABLING ADSENSE, add to script-src and connect-src:
+  #   https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net
+  # and add to img-src and frame-src:
+  #   https://*.google.com https://*.doubleclick.net https://*.googlesyndication.com
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://cloud.umami.is; connect-src 'self' https://cloud.umami.is; style-src 'self'; img-src 'self' data:; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests
+
+  # Stops the site being framed for clickjacking.
+  X-Frame-Options: DENY
+
+  # Never let a browser second guess a declared content type.
+  X-Content-Type-Options: nosniff
+
+  # Send the origin to other sites, the full path only to ourselves.
+  Referrer-Policy: strict-origin-when-cross-origin
+
+  # No tool here needs any of these, so switch them all off.
+  Permissions-Policy: accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=(), interest-cohort=()
+
+  # Two years, preload eligible. Remove this if the domain must ever serve
+  # anything over plain HTTP.
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+
+# The dev tool has an inline <style> block, so it needs its own looser policy.
+# It is also disallowed in robots.txt and carries a noindex tag.
+/_dev/*
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:
+  X-Robots-Tag: noindex, nofollow
+
+# Fingerprint-free asset paths, so cache conservatively but not forever.
+# Bump this once filenames are content hashed.
+/assets/*
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/favicon.svg
+  Cache-Control: public, max-age=604800

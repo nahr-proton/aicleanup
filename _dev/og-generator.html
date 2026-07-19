@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>OG image generator (dev tool)</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+         background: #fbfaf9; color: #171717; margin: 0; padding: 40px 24px; line-height: 1.6; }
+  .wrap { max-width: 900px; margin: 0 auto; }
+  h1 { font-size: 1.6rem; letter-spacing: -0.02em; margin: 0 0 8px; }
+  p { color: #5c5a57; max-width: 60ch; }
+  button { font: inherit; font-weight: 500; background: #171717; color: #fff; border: none;
+           border-radius: 999px; padding: 12px 26px; cursor: pointer; margin: 20px 0 8px; }
+  button:hover { background: #000; }
+  .card { margin: 28px 0; padding: 16px; background: #fff; border: 1px solid #e8e5e1; border-radius: 12px; }
+  .card h2 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em;
+             color: #8f8c88; margin: 0 0 10px; }
+  canvas { width: 100%; height: auto; border: 1px solid #e8e5e1; border-radius: 6px; display: block; }
+  code { background: #f3f1ee; padding: 2px 6px; border-radius: 4px; font-size: 0.85em; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Open Graph image generator</h1>
+  <p>
+    A local build tool, not part of the site. It draws the social share cards
+    at full 1200x630 resolution and downloads them as PNGs. Click the button,
+    then move the five files into <code>/assets/img/</code>.
+  </p>
+  <p>
+    Re-run this whenever a new tool is added: add an entry to the
+    <code>CARDS</code> array at the bottom of this file and reload.
+  </p>
+
+  <button id="download-all">Download all 5 images</button>
+  <div id="previews"></div>
+</div>
+
+<script>
+/* Draws one 1200x630 card. Mirrors the site's visual language: warm canvas,
+   the geometric logo mark, near-black heading, muted subtitle, clay accent. */
+function drawCard(title, subtitle) {
+  var W = 1200, H = 630;
+  var c = document.createElement('canvas');
+  c.width = W; c.height = H;
+  var x = c.getContext('2d');
+
+  x.fillStyle = '#fbfaf9';
+  x.fillRect(0, 0, W, H);
+  var g = x.createRadialGradient(180, -40, 0, 180, -40, 760);
+  g.addColorStop(0, '#ffffff'); g.addColorStop(1, 'rgba(255,255,255,0)');
+  x.fillStyle = g; x.fillRect(0, 0, W, H);
+  var g2 = x.createRadialGradient(1080, 60, 0, 1080, 60, 620);
+  g2.addColorStop(0, '#f5f2ed'); g2.addColorStop(1, 'rgba(245,242,237,0)');
+  x.fillStyle = g2; x.fillRect(0, 0, W, H);
+
+  var M = 90, s = 64, ly = M, u = s / 22;
+  x.fillStyle = '#171717';
+  x.beginPath();
+  if (x.roundRect) { x.roundRect(M, ly, s, s, 15); } else { x.rect(M, ly, s, s); }
+  x.fill();
+
+  function bar(bx, by, bw, bh, alpha) {
+    x.globalAlpha = alpha; x.fillStyle = '#ffffff'; x.beginPath();
+    if (x.roundRect) { x.roundRect(M + bx, ly + by, bw, bh, bh / 2); }
+    else { x.rect(M + bx, ly + by, bw, bh); }
+    x.fill(); x.globalAlpha = 1;
+  }
+  bar(5 * u, 5.6 * u, 6.5 * u, 2.4 * u, 0.45);
+  bar(13.2 * u, 5.6 * u, 3.8 * u, 2.4 * u, 0.45);
+  bar(5 * u, 9.8 * u, 12 * u, 2.4 * u, 1);
+  bar(5 * u, 14 * u, 12 * u, 2.4 * u, 1);
+
+  var SANS = '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif';
+
+  function wrap(text, maxW) {
+    var words = text.split(' '), line = '', out = [];
+    for (var i = 0; i < words.length; i++) {
+      var test = line ? line + ' ' + words[i] : words[i];
+      if (x.measureText(test).width > maxW && line) { out.push(line); line = words[i]; }
+      else { line = test; }
+    }
+    out.push(line);
+    return out;
+  }
+
+  x.fillStyle = '#171717';
+  x.font = '600 76px ' + SANS;
+  var lines = wrap(title, W - M * 2), ty = ly + s + 100;
+  lines.forEach(function (l, i) { x.fillText(l, M, ty + i * 88); });
+
+  x.fillStyle = '#5c5a57';
+  x.font = '400 34px ' + SANS;
+  var sy = ty + lines.length * 88 + 16;
+  wrap(subtitle, W - M * 2 - 40).forEach(function (l, i) { x.fillText(l, M, sy + i * 46); });
+
+  x.strokeStyle = '#e8e5e1'; x.lineWidth = 1;
+  x.beginPath(); x.moveTo(M, H - M - 52); x.lineTo(W - M, H - M - 52); x.stroke();
+
+  x.fillStyle = '#8f8c88'; x.font = '500 28px ' + SANS;
+  x.fillText('aicleanup.tools', M, H - M - 8);
+  var w1 = x.measureText('aicleanup.tools').width;
+  x.fillStyle = '#b8502a';
+  x.fillText('Free · No signup · Nothing uploaded', M + w1 + 40, H - M - 8);
+
+  return c;
+}
+
+/* filename, title, subtitle */
+var CARDS = [
+  ['og-home.png', 'Free tools that clean up AI text',
+   'Markdown tables to Excel, AI text to Word, and an em dash remover.'],
+  ['og-markdown-table-to-excel.png', 'Markdown Table to Excel',
+   'Paste a ChatGPT table, download a real .xlsx or .csv.'],
+  ['og-ai-text-to-word.png', 'AI Text to Word',
+   'Turn markdown into a .docx with real headings, lists and tables.'],
+  ['og-em-dash-remover.png', 'Em Dash Remover',
+   'Strip em dashes, smart quotes and invisible characters.'],
+  ['og-default.png', 'AI Output Cleanup',
+   'Small, free, private tools for AI generated text.']
+];
+
+var previews = document.getElementById('previews');
+var canvases = [];
+
+CARDS.forEach(function (card) {
+  var c = drawCard(card[1], card[2]);
+  canvases.push([card[0], c]);
+  var box = document.createElement('div');
+  box.className = 'card';
+  var h = document.createElement('h2');
+  h.textContent = card[0];
+  box.appendChild(h);
+  box.appendChild(c);
+  previews.appendChild(box);
+});
+
+document.getElementById('download-all').addEventListener('click', function () {
+  canvases.forEach(function (entry, i) {
+    /* Staggered, because browsers throttle rapid successive downloads. */
+    setTimeout(function () {
+      entry[1].toBlob(function (blob) {
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = entry[0];
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+      }, 'image/png');
+    }, i * 400);
+  });
+});
+</script>
+</body>
+</html>

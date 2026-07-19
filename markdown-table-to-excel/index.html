@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Markdown Table to Excel | Convert ChatGPT Tables</title>
+<meta name="description" content="Convert a markdown table to Excel free. Paste a ChatGPT table and download .xlsx or .csv, or copy tab separated text for Google Sheets. Nothing uploaded.">
+<link rel="canonical" href="https://aicleanup.tools/markdown-table-to-excel/">
+<meta name="robots" content="index, follow, max-image-preview:large">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="AI Output Cleanup">
+<meta property="og:title" content="Markdown Table to Excel Converter">
+<meta property="og:description" content="Paste a ChatGPT markdown table and download it as .xlsx or .csv, or copy it straight into Excel and Google Sheets. Free, nothing uploaded.">
+<meta property="og:url" content="https://aicleanup.tools/markdown-table-to-excel/">
+<meta property="og:image" content="https://aicleanup.tools/assets/img/og-markdown-table-to-excel.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="AI Output Cleanup, free browser tools for AI generated text">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="stylesheet" href="/assets/css/site.css">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Markdown Table to Excel",
+      "url": "https://aicleanup.tools/markdown-table-to-excel/",
+      "description": "Converts markdown tables from ChatGPT and other AI assistants into Excel .xlsx, .csv or tab separated text. Runs entirely in the browser.",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Any modern web browser",
+      "browserRequirements": "Requires JavaScript",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "EUR"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why does a ChatGPT table paste into Excel as one long column?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A markdown table is plain text. The pipe characters draw the columns for a human reader, but Excel does not treat a pipe as a column separator, so every row lands in a single cell. The table has to be converted into a real grid first, which is what this tool does."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What if my paste contains more than one table?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Every table in the text is found and previewed. The .xlsx download places each table on its own worksheet, named Table 1, Table 2 and so on. For CSV and tab separated copies, which hold only one grid each, a picker appears so you can choose which table to export."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What happens to bold text, links and code inside cells?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The markdown syntax is removed and the text is kept. Bold becomes plain text, inline code loses its backticks, and a link keeps its visible label rather than the URL. Escaped pipes inside a cell stay as pipe characters instead of splitting the column."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I use xlsx, csv or tab separated?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use .xlsx for Excel, especially with several tables, because each one becomes a worksheet. Use .csv for importing into other software. Use the tab separated copy when you want to paste directly into a sheet that is already open in Excel or Google Sheets, since it fills the cells immediately with no import step."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is my table uploaded anywhere?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Parsing and file creation happen in your browser. The spreadsheet file is built on your own device and never sent to a server. Your data is never stored or logged."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap wrap--wide site-header__inner">
+    <a class="logo" href="/">
+      <svg width="22" height="22" viewBox="0 0 22 22" role="img" aria-label="AI Output Cleanup logo">
+        <rect width="22" height="22" rx="5" fill="#171717"></rect>
+        <rect x="5" y="5.6" width="6.5" height="2.4" rx="1.2" fill="#ffffff" opacity="0.45"></rect>
+        <rect x="13.2" y="5.6" width="3.8" height="2.4" rx="1.2" fill="#ffffff" opacity="0.45"></rect>
+        <rect x="5" y="9.8" width="12" height="2.4" rx="1.2" fill="#ffffff"></rect>
+        <rect x="5" y="14" width="12" height="2.4" rx="1.2" fill="#ffffff"></rect>
+      </svg>
+      <span>AI Output Cleanup</span>
+    </a>
+    <nav class="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="/markdown-table-to-excel/" aria-current="page">Table to Excel</a></li>
+        <li><a href="/ai-text-to-word/">AI Text to Word</a></li>
+        <li><a href="/em-dash-remover/">Em Dash Remover</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <div class="hero">
+    <div class="wrap wrap--wide">
+      <h1>Markdown Table to Excel</h1>
+      <p class="lede">
+        Paste the table ChatGPT gave you and get a real spreadsheet. Download
+        it as .xlsx or .csv, or copy it straight into a sheet you already have
+        open.
+      </p>
+      <p class="privacy-note">
+        <svg class="icon icon--sm" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M12 3 4.5 6v5.2c0 4.4 3.2 8.5 7.5 9.8 4.3-1.3 7.5-5.4 7.5-9.8V6L12 3Z"></path>
+          <path d="m9 12 2.2 2.2L15.5 10"></path>
+        </svg>
+        <span>Everything runs in your browser. Nothing is uploaded.</span>
+      </p>
+    </div>
+  </div>
+
+  <div class="wrap wrap--wide">
+
+    <!-- The tool itself, directly under the H1 and before any explanation. -->
+    <section class="tool" aria-label="Markdown table converter">
+      <div class="field__head">
+        <label for="input">Your markdown table</label>
+        <button type="button" class="btn btn--ghost btn--sm" id="load-example">Try an example</button>
+      </div>
+      <textarea id="input" spellcheck="false" autocomplete="off"
+        placeholder="Paste your markdown table here, pipes and all.
+
+| Region | Revenue |
+| ------ | ------- |
+| North  | $12,400 |"></textarea>
+
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+
+      <!-- Shown only when text is present but no table could be found. -->
+      <div class="empty-state" id="empty-state" hidden>
+        <p><strong>That does not look like a markdown table yet.</strong></p>
+        <p>A markdown table needs a header row, then a row of dashes, then the
+           data. The dashes are the important part, they are what tells the
+           tool where the header ends.</p>
+        <pre><code>| Region | Revenue |
+| ------ | ------- |
+| North  | $12,400 |
+| South  | $9,800  |</code></pre>
+        <p>The outer pipes are optional and alignment colons such as
+           <code>:---:</code> are fine. Copy the whole table, including the row
+           of dashes, and paste it above.</p>
+      </div>
+
+      <div class="preview" id="preview" hidden></div>
+
+      <div class="field" id="table-select" hidden></div>
+
+      <div class="btn-row">
+        <button type="button" class="btn btn--primary" id="dl-xlsx" disabled>
+          <svg class="icon icon--down" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 4v11M7.5 10.5 12 15l4.5-4.5M5 20h14"></path>
+          </svg>
+          <span>Download .xlsx</span>
+        </button>
+        <button type="button" class="btn btn--ghost" id="dl-csv" disabled>
+          <svg class="icon icon--down" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 4v11M7.5 10.5 12 15l4.5-4.5M5 20h14"></path>
+          </svg>
+          <span>Download .csv</span>
+        </button>
+        <button type="button" class="btn btn--ghost" id="copy-tsv" disabled>
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="9" y="9" width="12" height="12" rx="2"></rect>
+            <path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"></path>
+          </svg>
+          <span>Copy as tab separated</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- AdSense: paste the ad unit snippet inside this container. Leave the reserved height. -->
+    <div class="ad-slot" data-ad-slot="mdtable-below-tool"></div>
+
+    <div class="layout">
+    <div class="layout__main">
+
+      <section class="section prose" aria-labelledby="how-heading">
+        <p class="eyebrow">Three steps</p>
+        <h2 id="how-heading">How to use it</h2>
+        <ol class="steps">
+          <li>In ChatGPT, Claude or Gemini, select the whole table including the
+              row of dashes, and copy it.</li>
+          <li>Paste it into the box above. The parsed table appears underneath
+              so you can check it looks right.</li>
+          <li>Download <strong>.xlsx</strong> for Excel, <strong>.csv</strong>
+              for anything else, or copy the tab separated version and paste it
+              straight into an open sheet.</li>
+        </ol>
+      </section>
+
+      <section class="section prose" aria-labelledby="why-heading">
+        <p class="eyebrow">Background</p>
+        <h2 id="why-heading">Why AI tables break in Excel</h2>
+        <p>
+          What looks like a tidy table in a chat window is not a table at all.
+          It is plain text, drawn with pipe characters and dashes, in a format
+          called markdown. The chat interface renders those characters into
+          neat lines and columns, so on screen it looks finished.
+        </p>
+        <p>
+          Excel has never heard of markdown. When you paste, it sees ordinary
+          text with no column separator it recognises, because a pipe is not
+          one of the characters it splits on. Every row is dropped into a
+          single cell, pipes and all, and you get one tall column of rubbish
+          instead of a grid.
+        </p>
+        <p>
+          The fix is to read the markdown properly, work out where the columns
+          actually are, and hand Excel something it understands: either a real
+          .xlsx file, a comma separated file, or tab separated text, which is
+          the one format spreadsheets will split into cells automatically when
+          you paste. This tool does that, including the fiddly parts such as
+          escaped pipes inside cells and bold text that should not survive the
+          trip.
+        </p>
+      </section>
+
+      <section class="section" aria-labelledby="faq-heading">
+        <p class="eyebrow">FAQ</p>
+        <h2 id="faq-heading">Questions</h2>
+
+        <div class="faq-item">
+          <h3>Why does a ChatGPT table paste into Excel as one long column?</h3>
+          <p>A markdown table is plain text. The pipe characters draw the
+             columns for a human reader, but Excel does not treat a pipe as a
+             column separator, so every row lands in a single cell. The table
+             has to be converted into a real grid first, which is what this
+             tool does.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>What if my paste contains more than one table?</h3>
+          <p>Every table in the text is found and previewed. The .xlsx download
+             places each table on its own worksheet, named Table 1, Table 2 and
+             so on. For CSV and tab separated copies, which hold only one grid
+             each, a picker appears so you can choose which table to export.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>What happens to bold text, links and code inside cells?</h3>
+          <p>The markdown syntax is removed and the text is kept. Bold becomes
+             plain text, inline code loses its backticks, and a link keeps its
+             visible label rather than the URL. Escaped pipes inside a cell stay
+             as pipe characters instead of splitting the column.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Should I use xlsx, csv or tab separated?</h3>
+          <p>Use .xlsx for Excel, especially with several tables, because each
+             one becomes a worksheet. Use .csv for importing into other
+             software. Use the tab separated copy when you want to paste
+             directly into a sheet that is already open in Excel or Google
+             Sheets, since it fills the cells immediately with no import
+             step.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Is my table uploaded anywhere?</h3>
+          <p>No. Parsing and file creation happen in your browser. The
+             spreadsheet file is built on your own device and never sent to a
+             server. Your data is never stored or logged.</p>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="more-heading">
+        <p class="eyebrow">More free tools</p>
+        <h2 id="more-heading">Other cleanup tools</h2>
+        <ul class="cols cols--3">
+          <li class="col">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"></path>
+              <path d="M14 3v5h5"></path>
+              <path d="M9 13h6M9 17h4"></path>
+            </svg>
+            <h3><a href="/ai-text-to-word/">AI Text to Word</a></h3>
+            <p>Convert markdown formatted AI output into a .docx with real
+               headings, lists, tables and code blocks.</p>
+            <span class="col__cta" aria-hidden="true">
+              Open tool
+              <svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+            </span>
+          </li>
+          <li class="col">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M3 8h18M3 16h12"></path>
+              <path d="M15.5 16h5.5" opacity="0.3" stroke-dasharray="2 2.5"></path>
+            </svg>
+            <h3><a href="/em-dash-remover/">Em Dash Remover</a></h3>
+            <p>Strip the em dashes, smart quotes and invisible characters that
+               make AI writing look like AI writing.</p>
+            <span class="col__cta" aria-hidden="true">
+              Open tool
+              <svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+            </span>
+          </li>
+        </ul>
+      </section>
+
+    </div><!-- /.layout__main -->
+
+    <aside class="layout__aside" aria-label="Advertisement">
+      <!-- AdSense: paste the 300x600 rail ad unit inside this container. -->
+      <div class="ad-slot ad-slot--rail" data-ad-slot="mdtable-mid"></div>
+    </aside>
+    </div><!-- /.layout -->
+
+    <!-- AdSense: footer ad unit goes inside this container. -->
+    <div class="ad-slot ad-slot--footer" data-ad-slot="mdtable-footer"></div>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap wrap--wide">
+    <div class="footer-cols">
+      <div class="footer-brand">
+        <a class="logo" href="/">
+          <svg width="22" height="22" viewBox="0 0 22 22" role="img" aria-label="AI Output Cleanup logo">
+            <rect width="22" height="22" rx="5" fill="#171717"></rect>
+            <rect x="5" y="5.6" width="6.5" height="2.4" rx="1.2" fill="#ffffff" opacity="0.45"></rect>
+            <rect x="13.2" y="5.6" width="3.8" height="2.4" rx="1.2" fill="#ffffff" opacity="0.45"></rect>
+            <rect x="5" y="9.8" width="12" height="2.4" rx="1.2" fill="#ffffff"></rect>
+            <rect x="5" y="14" width="12" height="2.4" rx="1.2" fill="#ffffff"></rect>
+          </svg>
+          <span>AI Output Cleanup</span>
+        </a>
+        <p>Small, free, private tools for the text your AI assistant hands you.</p>
+      </div>
+
+      <nav aria-labelledby="footer-tools">
+        <h2 id="footer-tools">Tools</h2>
+        <ul>
+          <li><a href="/markdown-table-to-excel/">Markdown Table to Excel</a></li>
+          <li><a href="/ai-text-to-word/">AI Text to Word</a></li>
+          <li><a href="/em-dash-remover/">Em Dash Remover</a></li>
+        </ul>
+      </nav>
+
+      <nav aria-labelledby="footer-site">
+        <h2 id="footer-site">Site</h2>
+        <ul>
+          <li><a href="/about/">About</a></li>
+          <li><a href="/privacy/">Privacy</a></li>
+          <li><a href="/terms/">Terms</a></li>
+          <li><a href="/contact/">Contact</a></li>
+          <li><a href="/impressum/">Impressum</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <p class="site-footer__meta">
+      &copy; <span id="year">2026</span> AI Output Cleanup. All processing happens
+      in your browser. Nothing you paste is uploaded.
+    </p>
+  </div>
+</footer>
+
+<aside id="cookie-banner" class="cookie-banner" hidden aria-label="Cookie notice">
+  <div class="cookie-banner__inner">
+    <p>
+      This site uses cookies for advertising. You can decline and keep using
+      every tool. See our <a href="/privacy/">privacy policy</a>.
+    </p>
+    <div class="btn-row">
+      <button type="button" class="btn btn--ghost" id="cookie-decline">Decline</button>
+      <button type="button" class="btn btn--primary" id="cookie-accept">Accept</button>
+    </div>
+  </div>
+</aside>
+
+<script src="/assets/js/site.js" defer></script>
+<script src="/assets/js/markdown-table-to-excel.js" defer></script>
+</body>
+</html>

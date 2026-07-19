@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Local build tool, not site content.
+Disallow: /_dev/
+
+Sitemap: https://aicleanup.tools/sitemap.xml

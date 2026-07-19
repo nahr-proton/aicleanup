@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free AI Text Cleanup Tools | Markdown, Word, Excel</title>
+<meta name="description" content="Free browser tools that clean up ChatGPT and Claude output: markdown table to Excel, AI text to Word, and an em dash remover. No upload, no signup.">
+<link rel="canonical" href="https://aicleanup.tools/">
+<meta name="robots" content="index, follow, max-image-preview:large">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="AI Output Cleanup">
+<meta property="og:title" content="Free AI Text Cleanup Tools">
+<meta property="og:description" content="Clean up ChatGPT and Claude output in your browser: markdown tables to Excel, AI text to Word, em dash remover. Nothing is uploaded.">
+<meta property="og:url" content="https://aicleanup.tools/">
+<meta property="og:image" content="https://aicleanup.tools/assets/img/og-home.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="AI Output Cleanup, free browser tools for AI generated text">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="stylesheet" href="/assets/css/site.css">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://aicleanup.tools/#website",
+      "url": "https://aicleanup.tools/",
+      "name": "AI Output Cleanup",
+      "description": "Free browser based tools that clean up and convert AI generated text.",
+      "inLanguage": "en"
+    },
+    {
+      "@type": "ItemList",
+      "name": "Free AI text cleanup tools",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Markdown Table to Excel",
+          "url": "https://aicleanup.tools/markdown-table-to-excel/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "AI Text to Word",
+          "url": "https://aicleanup.tools/ai-text-to-word/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Em Dash Remover",
+          "url": "https://aicleanup.tools/em-dash-remover/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is my text uploaded to a server?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Every tool on this site runs entirely in your browser using JavaScript. Your text never leaves your device and is never stored, logged or sent anywhere."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need an account?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. There is no signup, no login and no email required. Open a tool, paste your text and use the result."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are these tools really free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. The tools are free with no usage limits, no accounts and no upsell. There is no advertising on the site either, and no cookies. Page visits are counted with a cookieless tool that cannot identify you or follow you to other sites. The site is small enough that the running costs are easy to cover privately."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do they work with Claude and Gemini output too?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. ChatGPT, Claude, Gemini, Copilot and most other assistants all produce standard markdown, so the tools work the same way with output from any of them."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do the tools work on a phone?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Every tool is built mobile first. Downloads such as .xlsx and .docx files save to your phone's downloads folder like any other file."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap wrap--wide site-header__inner">
+    <a class="logo" href="/">
+      <svg width="22" height="22" viewBox="0 0 22 22" role="img" aria-label="AI Output Cleanup logo">
+        <rect width="22" height="22" rx="5" fill="#171717"></rect>
+        <rect x="5" y="5.6" width="6.5" height="2.4" rx="1.2" fill="#ffffff" opacity="0.45"></rect>
+        <rect x="13.2" y="5.6" width="3.8" height="2.4" rx="1.2" fill="#ffffff" opacity="0.45"></rect>
+        <rect x="5" y="9.8" width="12" height="2.4" rx="1.2" fill="#ffffff"></rect>
+        <rect x="5" y="14" width="12" height="2.4" rx="1.2" fill="#ffffff"></rect>
+      </svg>
+      <span>AI Output Cleanup</span>
+    </a>
+    <nav class="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="/markdown-table-to-excel/">Table to Excel</a></li>
+        <li><a href="/ai-text-to-word/">AI Text to Word</a></li>
+        <li><a href="/em-dash-remover/">Em Dash Remover</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <div class="hero">
+    <div class="wrap wrap--wide hero__inner">
+      <div>
+        <svg class="hero__mark" width="34" height="34" viewBox="0 0 22 22" aria-hidden="true" focusable="false">
+          <rect width="22" height="22" rx="5" fill="#171717"></rect>
+          <rect x="5" y="5.6" width="6.5" height="2.4" rx="1.2" fill="#ffffff" opacity="0.45"></rect>
+          <rect x="13.2" y="5.6" width="3.8" height="2.4" rx="1.2" fill="#ffffff" opacity="0.45"></rect>
+          <rect x="5" y="9.8" width="12" height="2.4" rx="1.2" fill="#ffffff"></rect>
+          <rect x="5" y="14" width="12" height="2.4" rx="1.2" fill="#ffffff"></rect>
+        </svg>
+        <h1>Free tools that clean up AI text</h1>
+      </div>
+      <div class="hero__aside">
+        <p class="lede">
+          AI assistants write in markdown. Spreadsheets, word processors and
+          clients do not. These small tools convert what ChatGPT, Claude and
+          Gemini give you into something you can actually paste, send or file.
+        </p>
+        <p class="privacy-note">
+          <svg class="icon icon--sm" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M12 3 4.5 6v5.2c0 4.4 3.2 8.5 7.5 9.8 4.3-1.3 7.5-5.4 7.5-9.8V6L12 3Z"></path>
+            <path d="m9 12 2.2 2.2L15.5 10"></path>
+          </svg>
+          <span>Everything runs in your browser. Nothing is uploaded.</span>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap wrap--wide">
+
+    <section class="section" aria-labelledby="tools-heading">
+      <p class="eyebrow">Three tools</p>
+      <h2 id="tools-heading">Pick the problem you have</h2>
+      <ul class="cols cols--3">
+        <li class="col">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+            <path d="M3 9.5h18M3 15h18M9 4v16"></path>
+          </svg>
+          <h3><a href="/markdown-table-to-excel/">Markdown Table to Excel</a></h3>
+          <p>Turn a pasted ChatGPT table into a real .xlsx, .csv or tab separated
+             text you can drop straight into Excel or Google Sheets.</p>
+          <span class="col__cta" aria-hidden="true">
+            Open tool
+            <svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+          </span>
+        </li>
+        <li class="col">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"></path>
+            <path d="M14 3v5h5"></path>
+            <path d="M9 13h6M9 17h4"></path>
+          </svg>
+          <h3><a href="/ai-text-to-word/">AI Text to Word</a></h3>
+          <p>Convert markdown formatted AI output into a .docx with real headings,
+             lists, tables and code blocks instead of stray asterisks.</p>
+          <span class="col__cta" aria-hidden="true">
+            Open tool
+            <svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+          </span>
+        </li>
+        <li class="col">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M3 8h18M3 16h12"></path>
+            <path d="M15.5 16h5.5" opacity="0.3" stroke-dasharray="2 2.5"></path>
+          </svg>
+          <h3><a href="/em-dash-remover/">Em Dash Remover</a></h3>
+          <p>Strip the em dashes, smart quotes and invisible characters that make
+             AI writing look like AI writing.</p>
+          <span class="col__cta" aria-hidden="true">
+            Open tool
+            <svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+          </span>
+        </li>
+      </ul>
+    </section>
+
+    <div class="layout">
+    <div class="layout__main">
+
+    <section class="section prose" aria-labelledby="why-heading">
+      <p class="eyebrow">Background</p>
+      <h2 id="why-heading">Why AI output needs cleaning up</h2>
+      <p>
+        Large language models are trained to write markdown. It is the format
+        that renders nicely inside a chat window, so a table arrives as rows of
+        pipe characters and a heading arrives with hash marks in front of it.
+        The moment that text leaves the chat window, the formatting stops being
+        helpful and starts being a problem.
+      </p>
+      <p>
+        Paste a markdown table into Excel and you get one long column of
+        pipes. Paste a formatted answer into Word and you get literal asterisks
+        around every bold phrase. Paste anything at all into an email and you
+        carry along em dashes, curly quotes and zero width characters that were
+        never in your own writing.
+      </p>
+      <p>
+        Each tool here fixes one of those problems and nothing else. No account,
+        no upload, no watermark on the file you download.
+      </p>
+    </section>
+
+    <section class="section prose" aria-labelledby="how-heading">
+      <p class="eyebrow">Three steps</p>
+      <h2 id="how-heading">How it works</h2>
+      <ol class="steps">
+        <li>Pick the tool that matches the problem you have.</li>
+        <li>Paste your text into the box. Nothing is sent anywhere.</li>
+        <li>Copy the clean result, or download it as a file.</li>
+      </ol>
+    </section>
+
+    <section class="section" aria-labelledby="faq-heading">
+      <p class="eyebrow">FAQ</p>
+      <h2 id="faq-heading">Frequently asked questions</h2>
+
+      <div class="faq-item">
+        <h3>Is my text uploaded to a server?</h3>
+        <p>No. Every tool on this site runs entirely in your browser using
+           JavaScript. Your text never leaves your device and is never stored,
+           logged or sent anywhere. You can disconnect from the internet after
+           the page loads and the tools still work.</p>
+      </div>
+
+      <div class="faq-item">
+        <h3>Do I need an account?</h3>
+        <p>No. There is no signup, no login and no email required. Open a tool,
+           paste your text and use the result.</p>
+      </div>
+
+      <div class="faq-item">
+        <h3>Are these tools really free?</h3>
+        <p>Yes, with no usage limits, no accounts and no upsell. There is no
+           advertising on the site either, and no cookies. Page visits are
+           counted with a cookieless tool that cannot identify you or follow
+           you to other sites. The site is small enough that the running costs
+           are easy to cover privately.</p>
+      </div>
+
+      <div class="faq-item">
+        <h3>Do they work with Claude and Gemini output too?</h3>
+        <p>Yes. ChatGPT, Claude, Gemini, Copilot and most other assistants all
+           produce standard markdown, so the tools work the same way with output
+           from any of them.</p>
+      </div>
+
+      <div class="faq-item">
+        <h3>Do the tools work on a phone?</h3>
+        <p>Yes. Every tool is built mobile first. Downloads such as .xlsx and
+           .docx files save to your phone's downloads folder like any other
+           file.</p>
+      </div>
+    </section>
+
+    </div><!-- /.layout__main -->
+
+    <aside class="layout__aside" aria-label="Advertisement">
+      <!-- AdSense: paste the 300x600 rail ad unit inside this container. Leave the reserved height. -->
+      <div class="ad-slot ad-slot--rail" data-ad-slot="home-rail"></div>
+    </aside>
+    </div><!-- /.layout -->
+
+    <!-- AdSense: footer ad unit goes inside this container. -->
+    <div class="ad-slot ad-slot--footer" data-ad-slot="home-footer"></div>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap wrap--wide">
+    <div class="footer-cols">
+      <div class="footer-brand">
+        <a class="logo" href="/">
+          <svg width="22" height="22" viewBox="0 0 22 22" role="img" aria-label="AI Output Cleanup logo">
+            <rect width="22" height="22" rx="5" fill="#171717"></rect>
+            <rect x="5" y="5.6" width="6.5" height="2.4" rx="1.2" fill="#ffffff" opacity="0.45"></rect>
+            <rect x="13.2" y="5.6" width="3.8" height="2.4" rx="1.2" fill="#ffffff" opacity="0.45"></rect>
+            <rect x="5" y="9.8" width="12" height="2.4" rx="1.2" fill="#ffffff"></rect>
+            <rect x="5" y="14" width="12" height="2.4" rx="1.2" fill="#ffffff"></rect>
+          </svg>
+          <span>AI Output Cleanup</span>
+        </a>
+        <p>Small, free, private tools for the text your AI assistant hands you.</p>
+      </div>
+
+      <nav aria-labelledby="footer-tools">
+        <h2 id="footer-tools">Tools</h2>
+        <ul>
+          <li><a href="/markdown-table-to-excel/">Markdown Table to Excel</a></li>
+          <li><a href="/ai-text-to-word/">AI Text to Word</a></li>
+          <li><a href="/em-dash-remover/">Em Dash Remover</a></li>
+        </ul>
+      </nav>
+
+      <nav aria-labelledby="footer-site">
+        <h2 id="footer-site">Site</h2>
+        <ul>
+          <li><a href="/about/">About</a></li>
+          <li><a href="/privacy/">Privacy</a></li>
+          <li><a href="/terms/">Terms</a></li>
+          <li><a href="/contact/">Contact</a></li>
+          <li><a href="/impressum/">Impressum</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <p class="site-footer__meta">
+      &copy; <span id="year">2026</span> AI Output Cleanup. All processing happens
+      in your browser. Nothing you paste is uploaded.
+    </p>
+  </div>
+</footer>
+
+<aside id="cookie-banner" class="cookie-banner" hidden aria-label="Cookie notice">
+  <div class="cookie-banner__inner">
+    <p>
+      This site uses cookies for advertising. You can decline and keep using
+      every tool. See our <a href="/privacy/">privacy policy</a>.
+    </p>
+    <div class="btn-row">
+      <button type="button" class="btn btn--ghost" id="cookie-decline">Decline</button>
+      <button type="button" class="btn btn--primary" id="cookie-accept">Accept</button>
+    </div>
+  </div>
+</aside>
+
+<script src="/assets/js/site.js" defer></script>
+</body>
+</html>

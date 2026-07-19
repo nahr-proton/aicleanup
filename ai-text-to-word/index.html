@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Text to Word | ChatGPT to Word Converter</title>
+<meta name="description" content="Free AI text to Word converter. Paste ChatGPT or Claude markdown and download a .docx with real headings, lists, tables and code. Nothing is uploaded.">
+<link rel="canonical" href="https://aicleanup.tools/ai-text-to-word/">
+<meta name="robots" content="index, follow, max-image-preview:large">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="AI Output Cleanup">
+<meta property="og:title" content="AI Text to Word Converter">
+<meta property="og:description" content="Paste markdown from ChatGPT or Claude and download a real .docx with headings, bold, lists, tables and code blocks. Free, nothing uploaded.">
+<meta property="og:url" content="https://aicleanup.tools/ai-text-to-word/">
+<meta property="og:image" content="https://aicleanup.tools/assets/img/og-ai-text-to-word.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="AI Output Cleanup, free browser tools for AI generated text">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="stylesheet" href="/assets/css/site.css">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "AI Text to Word",
+      "url": "https://aicleanup.tools/ai-text-to-word/",
+      "description": "Converts markdown formatted AI output from ChatGPT, Claude and Gemini into a Microsoft Word .docx file with real headings, lists, tables and code blocks. Runs entirely in the browser.",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Any modern web browser",
+      "browserRequirements": "Requires JavaScript",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "EUR"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why does ChatGPT text paste into Word with asterisks everywhere?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The assistant writes in markdown, where asterisks mean bold and hash marks mean headings. The chat window renders those symbols into real formatting, but the underlying text still contains them. Word does not understand markdown, so when you paste you get the raw symbols instead of the formatting they stand for."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What formatting is preserved in the Word file?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Headings one to four become real Word heading styles, so they appear in the navigation pane and any table of contents you insert. Bold, italic and strikethrough are kept, along with bullet lists, numbered lists, tables, blockquotes, links and code blocks, which are set in a monospaced font on a light grey background."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I edit the document afterwards?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. The result is an ordinary .docx file with real Word styles, not an image or a locked export. It opens in Microsoft Word, Google Docs, LibreOffice and Pages, and everything in it can be edited normally."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What do the clean up options do?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "They tidy the giveaway marks of AI writing before the document is built. Em dashes can be replaced with commas, curly quotes converted to straight ones, and emoji removed. All three are optional and off by default, so the text is converted exactly as pasted unless you ask otherwise."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is my text uploaded anywhere?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. The markdown is parsed and the Word file is assembled in your browser. The document is created on your own device and never sent to a server, stored or logged."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap wrap--wide site-header__inner">
+    <a class="logo" href="/">
+      <svg width="22" height="22" viewBox="0 0 22 22" role="img" aria-label="AI Output Cleanup logo">
+        <rect width="22" height="22" rx="5" fill="#171717"></rect>
+        <rect x="5" y="5.6" width="6.5" height="2.4" rx="1.2" fill="#ffffff" opacity="0.45"></rect>
+        <rect x="13.2" y="5.6" width="3.8" height="2.4" rx="1.2" fill="#ffffff" opacity="0.45"></rect>
+        <rect x="5" y="9.8" width="12" height="2.4" rx="1.2" fill="#ffffff"></rect>
+        <rect x="5" y="14" width="12" height="2.4" rx="1.2" fill="#ffffff"></rect>
+      </svg>
+      <span>AI Output Cleanup</span>
+    </a>
+    <nav class="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="/markdown-table-to-excel/">Table to Excel</a></li>
+        <li><a href="/ai-text-to-word/" aria-current="page">AI Text to Word</a></li>
+        <li><a href="/em-dash-remover/">Em Dash Remover</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <div class="hero">
+    <div class="wrap wrap--wide">
+      <h1>AI Text to Word</h1>
+      <p class="lede">
+        Paste markdown from ChatGPT, Claude or Gemini and download a real .docx
+        with proper headings, lists, tables and code, instead of a page full of
+        asterisks.
+      </p>
+      <p class="privacy-note">
+        <svg class="icon icon--sm" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M12 3 4.5 6v5.2c0 4.4 3.2 8.5 7.5 9.8 4.3-1.3 7.5-5.4 7.5-9.8V6L12 3Z"></path>
+          <path d="m9 12 2.2 2.2L15.5 10"></path>
+        </svg>
+        <span>Everything runs in your browser. Nothing is uploaded.</span>
+      </p>
+    </div>
+  </div>
+
+  <div class="wrap wrap--wide">
+
+    <!-- The tool itself, directly under the H1 and before any explanation. -->
+    <section class="tool" aria-label="Markdown to Word converter">
+      <div class="tool-grid">
+        <div>
+          <div class="field__head">
+            <label for="input">Your AI text</label>
+            <button type="button" class="btn btn--ghost btn--sm" id="load-example">Try an example</button>
+          </div>
+          <textarea id="input" spellcheck="false" autocomplete="off"
+            placeholder="Paste the markdown your assistant gave you.
+
+# A heading
+Some **bold** text, a list:
+
+- first item
+- second item"></textarea>
+        </div>
+
+        <div>
+          <div class="field__head">
+            <span class="label" id="preview-label">Preview</span>
+            <span class="field__hint">How the .docx will look</span>
+          </div>
+
+          <div class="empty-state" id="empty-state" hidden>
+            <p><strong>Nothing to convert yet.</strong></p>
+            <p>Paste some markdown on the left. Headings, bold, italic, bullet
+               and numbered lists, tables, blockquotes, links and code blocks
+               all carry through to the Word file.</p>
+          </div>
+
+          <div class="doc-preview" id="preview" role="region"
+               aria-labelledby="preview-label" tabindex="0" hidden></div>
+        </div>
+      </div>
+
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+
+      <div class="btn-row">
+        <button type="button" class="btn btn--primary" id="dl-docx" disabled>
+          <svg class="icon icon--down" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 4v11M7.5 10.5 12 15l4.5-4.5M5 20h14"></path>
+          </svg>
+          <span>Download .docx</span>
+        </button>
+      </div>
+
+      <div class="opt-cols">
+        <fieldset class="opt-group">
+          <legend class="opt-group__title">Clean up while converting</legend>
+          <label class="opt">
+            <input type="checkbox" id="opt-emdash">
+            <span class="opt__text">Replace em dashes with commas
+              <span class="opt__hint">fast, simple</span>
+            </span>
+          </label>
+          <label class="opt">
+            <input type="checkbox" id="opt-quotes">
+            <span class="opt__text">Curly quotes to straight quotes</span>
+          </label>
+          <label class="opt">
+            <input type="checkbox" id="opt-emoji">
+            <span class="opt__text">Remove emoji</span>
+          </label>
+        </fieldset>
+      </div>
+    </section>
+
+    <!-- AdSense: paste the ad unit snippet inside this container. Leave the reserved height. -->
+    <div class="ad-slot" data-ad-slot="word-below-tool"></div>
+
+    <div class="layout">
+    <div class="layout__main">
+
+      <section class="section prose" aria-labelledby="how-heading">
+        <p class="eyebrow">Three steps</p>
+        <h2 id="how-heading">How to use it</h2>
+        <ol class="steps">
+          <li>Copy the answer out of ChatGPT, Claude or Gemini. Copy the raw
+              text, including the hash marks and asterisks.</li>
+          <li>Paste it into the box above. The preview on the right shows the
+              formatting the document will have.</li>
+          <li>Press <strong>Download .docx</strong> and open the file in Word,
+              Google Docs or Pages.</li>
+        </ol>
+      </section>
+
+      <section class="section prose" aria-labelledby="why-heading">
+        <p class="eyebrow">Background</p>
+        <h2 id="why-heading">Why AI text breaks in Word</h2>
+        <p>
+          Assistants write in markdown, a plain text convention where a hash
+          mark means heading and a pair of asterisks means bold. The chat
+          window quietly renders those symbols into real formatting, so what
+          you see on screen looks like a finished document.
+        </p>
+        <p>
+          The symbols are still in the text. When you copy it out, you take
+          them with you. Word has no idea what they mean, so a heading arrives
+          as <code>## Section title</code> and every bold phrase arrives
+          wrapped in literal asterisks. The structure that made the answer
+          readable is now visible clutter, and you end up reformatting the
+          whole thing by hand.
+        </p>
+        <p>
+          This tool reads the markdown the way the chat window does, then
+          rebuilds it using genuine Word constructs. Headings become real
+          heading styles, which means they show up in the navigation pane and
+          in any table of contents you insert. Lists become real lists that
+          renumber themselves. Tables become real tables you can sort. Code
+          blocks get a monospaced font and a light background so they stay
+          readable.
+        </p>
+      </section>
+
+      <section class="section" aria-labelledby="faq-heading">
+        <p class="eyebrow">FAQ</p>
+        <h2 id="faq-heading">Questions</h2>
+
+        <div class="faq-item">
+          <h3>Why does ChatGPT text paste into Word with asterisks everywhere?</h3>
+          <p>The assistant writes in markdown, where asterisks mean bold and
+             hash marks mean headings. The chat window renders those symbols
+             into real formatting, but the underlying text still contains them.
+             Word does not understand markdown, so when you paste you get the
+             raw symbols instead of the formatting they stand for.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>What formatting is preserved in the Word file?</h3>
+          <p>Headings one to four become real Word heading styles, so they
+             appear in the navigation pane and any table of contents you
+             insert. Bold, italic and strikethrough are kept, along with bullet
+             lists, numbered lists, tables, blockquotes, links and code blocks,
+             which are set in a monospaced font on a light grey background.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Can I edit the document afterwards?</h3>
+          <p>Yes. The result is an ordinary .docx file with real Word styles,
+             not an image or a locked export. It opens in Microsoft Word,
+             Google Docs, LibreOffice and Pages, and everything in it can be
+             edited normally.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>What do the clean up options do?</h3>
+          <p>They tidy the giveaway marks of AI writing before the document is
+             built. Em dashes can be replaced with commas, curly quotes
+             converted to straight ones, and emoji removed. All three are
+             optional and off by default, so the text is converted exactly as
+             pasted unless you ask otherwise.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Is my text uploaded anywhere?</h3>
+          <p>No. The markdown is parsed and the Word file is assembled in your
+             browser. The document is created on your own device and never sent
+             to a server, stored or logged.</p>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="more-heading">
+        <p class="eyebrow">More free tools</p>
+        <h2 id="more-heading">Other cleanup tools</h2>
+        <ul class="cols cols--3">
+          <li class="col">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+              <path d="M3 9.5h18M3 15h18M9 4v16"></path>
+            </svg>
+            <h3><a href="/markdown-table-to-excel/">Markdown Table to Excel</a></h3>
+            <p>Turn a pasted ChatGPT table into a real .xlsx, .csv or tab
+               separated text for Excel and Google Sheets.</p>
+            <span class="col__cta" aria-hidden="true">
+              Open tool
+              <svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+            </span>
+          </li>
+          <li class="col">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M3 8h18M3 16h12"></path>
+              <path d="M15.5 16h5.5" opacity="0.3" stroke-dasharray="2 2.5"></path>
+            </svg>
+            <h3><a href="/em-dash-remover/">Em Dash Remover</a></h3>
+            <p>Strip the em dashes, smart quotes and invisible characters that
+               make AI writing look like AI writing.</p>
+            <span class="col__cta" aria-hidden="true">
+              Open tool
+              <svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+            </span>
+          </li>
+
+          <!-- ===================================================================
+               SCRIBER CARD. Ready to switch on after AdSense approval.
+               To make it live, delete the comment opener above this block and
+               the comment closer below it. Nothing else needs changing: it is
+               a third column in the list and the row is already built for 3.
+               Kept commented rather than hidden so crawlers never see a link
+               that visitors cannot.
+               ===================================================================
+          <li class="col">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+              <path d="m10.4 9.7 4.3 2.3-4.3 2.3z"></path>
+            </svg>
+            <h3><a href="https://scriber.video/" rel="noopener">Scriber, YouTube to text</a></h3>
+            <p>Paste a YouTube link and get a clean transcript in seconds.
+               Another tool I build, no signup needed.</p>
+            <span class="col__cta" aria-hidden="true">
+              Visit scriber.video
+              <svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+            </span>
+          </li>
+               =================================================================== -->
+        </ul>
+      </section>
+
+    </div><!-- /.layout__main -->
+
+    <aside class="layout__aside" aria-label="Advertisement">
+      <!-- AdSense: paste the 300x600 rail ad unit inside this container. -->
+      <div class="ad-slot ad-slot--rail" data-ad-slot="word-mid"></div>
+    </aside>
+    </div><!-- /.layout -->
+
+    <!-- AdSense: footer ad unit goes inside this container. -->
+    <div class="ad-slot ad-slot--footer" data-ad-slot="word-footer"></div>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap wrap--wide">
+    <div class="footer-cols">
+      <div class="footer-brand">
+        <a class="logo" href="/">
+          <svg width="22" height="22" viewBox="0 0 22 22" role="img" aria-label="AI Output Cleanup logo">
+            <rect width="22" height="22" rx="5" fill="#171717"></rect>
+            <rect x="5" y="5.6" width="6.5" height="2.4" rx="1.2" fill="#ffffff" opacity="0.45"></rect>
+            <rect x="13.2" y="5.6" width="3.8" height="2.4" rx="1.2" fill="#ffffff" opacity="0.45"></rect>
+            <rect x="5" y="9.8" width="12" height="2.4" rx="1.2" fill="#ffffff"></rect>
+            <rect x="5" y="14" width="12" height="2.4" rx="1.2" fill="#ffffff"></rect>
+          </svg>
+          <span>AI Output Cleanup</span>
+        </a>
+        <p>Small, free, private tools for the text your AI assistant hands you.</p>
+      </div>
+
+      <nav aria-labelledby="footer-tools">
+        <h2 id="footer-tools">Tools</h2>
+        <ul>
+          <li><a href="/markdown-table-to-excel/">Markdown Table to Excel</a></li>
+          <li><a href="/ai-text-to-word/">AI Text to Word</a></li>
+          <li><a href="/em-dash-remover/">Em Dash Remover</a></li>
+        </ul>
+      </nav>
+
+      <nav aria-labelledby="footer-site">
+        <h2 id="footer-site">Site</h2>
+        <ul>
+          <li><a href="/about/">About</a></li>
+          <li><a href="/privacy/">Privacy</a></li>
+          <li><a href="/terms/">Terms</a></li>
+          <li><a href="/contact/">Contact</a></li>
+          <li><a href="/impressum/">Impressum</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <p class="site-footer__meta">
+      &copy; <span id="year">2026</span> AI Output Cleanup. All processing happens
+      in your browser. Nothing you paste is uploaded.
+    </p>
+  </div>
+</footer>
+
+<aside id="cookie-banner" class="cookie-banner" hidden aria-label="Cookie notice">
+  <div class="cookie-banner__inner">
+    <p>
+      This site uses cookies for advertising. You can decline and keep using
+      every tool. See our <a href="/privacy/">privacy policy</a>.
+    </p>
+    <div class="btn-row">
+      <button type="button" class="btn btn--ghost" id="cookie-decline">Decline</button>
+      <button type="button" class="btn btn--primary" id="cookie-accept">Accept</button>
+    </div>
+  </div>
+</aside>
+
+<script src="/assets/js/site.js" defer></script>
+<script src="/assets/js/ai-text-to-word.js" defer></script>
+</body>
+</html>

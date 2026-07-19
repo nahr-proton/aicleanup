@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Em Dash Remover | Remove Em Dashes From ChatGPT Text</title>
+<meta name="description" content="Free em dash remover for AI text. Paste ChatGPT output to strip em dashes, smart quotes and invisible characters. Runs in your browser, nothing uploaded.">
+<link rel="canonical" href="https://aicleanup.tools/em-dash-remover/">
+<meta name="robots" content="index, follow, max-image-preview:large">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="AI Output Cleanup">
+<meta property="og:title" content="Em Dash Remover for AI Text">
+<meta property="og:description" content="Paste ChatGPT output and strip em dashes, smart quotes and invisible characters instantly. Free, no signup, nothing uploaded.">
+<meta property="og:url" content="https://aicleanup.tools/em-dash-remover/">
+<meta property="og:image" content="https://aicleanup.tools/assets/img/og-em-dash-remover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="AI Output Cleanup, free browser tools for AI generated text">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="stylesheet" href="/assets/css/site.css">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Em Dash Remover",
+      "url": "https://aicleanup.tools/em-dash-remover/",
+      "description": "Removes em dashes, smart quotes and invisible characters from AI generated text. Runs entirely in the browser.",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Any modern web browser",
+      "browserRequirements": "Requires JavaScript",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "EUR"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why does ChatGPT use so many em dashes?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Em dashes are common in edited, professional prose, which is heavily represented in the text these models learned from. The model picks up the habit and applies it far more often than a human writer would, so the dash becomes one of the clearest signals that a passage was machine written."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between an em dash, an en dash and a hyphen?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A hyphen is the short one on your keyboard and joins words, as in well-known. An en dash is slightly wider and marks ranges, as in pages 10-20. An em dash is the widest and separates clauses in a sentence. Only the hyphen has its own key, which is why the other two arrive invisibly through copy and paste."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Will replacing em dashes change the meaning of my text?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. An em dash separates clauses, and a comma does the same job with a softer break, so the sentence still reads correctly. Choosing to remove the dash entirely leaves a single space behind rather than deleting it outright, because deleting it would join the words on either side together."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What are invisible characters and why are they in my text?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Zero width spaces, soft hyphens, non breaking spaces and direction marks take up no visible room but are really there in the text. They arrive through copy and paste and can break search, word counts, CSV files and form validation. This tool strips them and converts unusual spaces into ordinary ones."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is my text uploaded anywhere?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. The cleaning runs in your own browser in JavaScript. Your text is never sent to a server, never stored and never logged. You can disconnect from the internet after the page loads and the tool still works."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap wrap--wide site-header__inner">
+    <a class="logo" href="/">
+      <svg width="22" height="22" viewBox="0 0 22 22" role="img" aria-label="AI Output Cleanup logo">
+        <rect width="22" height="22" rx="5" fill="#171717"></rect>
+        <rect x="5" y="5.6" width="6.5" height="2.4" rx="1.2" fill="#ffffff" opacity="0.45"></rect>
+        <rect x="13.2" y="5.6" width="3.8" height="2.4" rx="1.2" fill="#ffffff" opacity="0.45"></rect>
+        <rect x="5" y="9.8" width="12" height="2.4" rx="1.2" fill="#ffffff"></rect>
+        <rect x="5" y="14" width="12" height="2.4" rx="1.2" fill="#ffffff"></rect>
+      </svg>
+      <span>AI Output Cleanup</span>
+    </a>
+    <nav class="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="/markdown-table-to-excel/">Table to Excel</a></li>
+        <li><a href="/ai-text-to-word/">AI Text to Word</a></li>
+        <li><a href="/em-dash-remover/" aria-current="page">Em Dash Remover</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <div class="hero">
+    <div class="wrap wrap--wide">
+      <h1>Em Dash Remover</h1>
+      <p class="lede">
+        Paste text from ChatGPT, Claude or Gemini and strip the em dashes,
+        smart quotes and invisible characters that give AI writing away.
+      </p>
+      <p class="privacy-note">
+        <svg class="icon icon--sm" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M12 3 4.5 6v5.2c0 4.4 3.2 8.5 7.5 9.8 4.3-1.3 7.5-5.4 7.5-9.8V6L12 3Z"></path>
+          <path d="m9 12 2.2 2.2L15.5 10"></path>
+        </svg>
+        <span>Everything runs in your browser. Nothing is uploaded.</span>
+      </p>
+    </div>
+  </div>
+
+  <div class="wrap wrap--wide">
+
+    <!-- The tool itself, directly under the H1 and before any explanation. -->
+    <section class="tool" aria-label="Em dash remover tool">
+      <div class="tool-grid">
+        <div>
+          <div class="field__head">
+            <label for="input">Your text</label>
+            <span class="field__hint">Paste anything</span>
+          </div>
+          <textarea id="input" spellcheck="false" autocomplete="off"
+            placeholder="Paste your AI generated text here.
+
+The tool cleans it as you type - there is no button to press and nothing leaves your browser."></textarea>
+        </div>
+
+        <div>
+          <div class="field__head">
+            <label for="output">Cleaned text</label>
+            <span class="field__hint">Read only</span>
+          </div>
+          <textarea id="output" readonly spellcheck="false"
+            placeholder="Your cleaned text appears here."></textarea>
+        </div>
+      </div>
+
+      <p class="counter" id="counter">
+        <svg class="icon icon--sm" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <circle cx="12" cy="12" r="9"></circle>
+          <path d="M12 11v5M12 8h.01"></path>
+        </svg>
+        <span id="counter-text" role="status" aria-live="polite">Paste your text above and a count of what needs cleaning appears here.</span>
+      </p>
+
+      <div class="btn-row">
+        <button type="button" class="btn btn--primary" id="copy" disabled>
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="9" y="9" width="12" height="12" rx="2"></rect>
+            <path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"></path>
+          </svg>
+          <span>Copy cleaned text</span>
+        </button>
+        <button type="button" class="btn btn--ghost" id="clear">Clear</button>
+      </div>
+
+      <div class="opt-cols">
+        <fieldset class="opt-group">
+          <legend class="opt-group__title">Replace each em dash with</legend>
+          <label class="opt">
+            <input type="radio" name="emdash" value="comma" checked>
+            <span class="opt__text">A comma
+              <span class="opt__hint">fast, simple</span>
+            </span>
+          </label>
+          <label class="opt">
+            <input type="radio" name="emdash" value="hyphen">
+            <span class="opt__text">A hyphen
+              <span class="opt__hint">fast-simple</span>
+            </span>
+          </label>
+          <label class="opt">
+            <input type="radio" name="emdash" value="remove">
+            <span class="opt__text">Nothing, remove it
+              <span class="opt__hint">fast simple</span>
+            </span>
+          </label>
+        </fieldset>
+
+        <fieldset class="opt-group">
+          <legend class="opt-group__title">Also clean up</legend>
+          <label class="opt">
+            <input type="checkbox" id="opt-quotes" checked>
+            <span class="opt__text">Curly quotes to straight quotes</span>
+          </label>
+          <label class="opt">
+            <input type="checkbox" id="opt-endash" checked>
+            <span class="opt__text">En dashes to hyphens</span>
+          </label>
+          <label class="opt">
+            <input type="checkbox" id="opt-invisible" checked>
+            <span class="opt__text">Invisible characters
+              <span class="opt__hint">zero width spaces, soft hyphens</span>
+            </span>
+          </label>
+          <label class="opt">
+            <input type="checkbox" id="opt-spaces" checked>
+            <span class="opt__text">Collapse double spaces</span>
+          </label>
+        </fieldset>
+      </div>
+    </section>
+
+    <!-- AdSense: paste the ad unit snippet inside this container. Leave the reserved height. -->
+    <div class="ad-slot" data-ad-slot="emdash-below-tool"></div>
+
+    <div class="layout">
+    <div class="layout__main">
+
+      <section class="section prose" aria-labelledby="how-heading">
+        <p class="eyebrow">Three steps</p>
+        <h2 id="how-heading">How to use it</h2>
+        <ol class="steps">
+          <li>Copy the text out of ChatGPT, Claude or Gemini and paste it into
+              the first box.</li>
+          <li>Pick what each em dash should become. A comma is the safest choice
+              and keeps the sentence reading naturally.</li>
+          <li>Press <strong>Copy cleaned text</strong> and paste it wherever it
+              is going.</li>
+        </ol>
+      </section>
+
+      <section class="section prose" aria-labelledby="why-heading">
+        <p class="eyebrow">Background</p>
+        <h2 id="why-heading">Why AI writing is full of em dashes</h2>
+        <p>
+          The em dash is the long one. It separates clauses in a sentence the
+          way a comma or a bracket does, but with more drama. Professional
+          editors love it, which means it appears constantly in the published,
+          heavily edited writing that language models learned from.
+        </p>
+        <p>
+          So the model picked up the habit, then overdid it. Where a human
+          writer might reach for an em dash once or twice in an article, an
+          assistant will use one in nearly every paragraph. That frequency is
+          the tell. Readers may not be able to name what feels off about the
+          text, but they notice the rhythm.
+        </p>
+        <p>
+          The same paste usually carries other invisible passengers. Curly
+          quotes instead of straight ones. Non breaking spaces that stop lines
+          wrapping where you expect. Zero width characters that take up no
+          room on screen but still sit in the file, quietly breaking search,
+          word counts and spreadsheet imports. None of it is visible, which is
+          precisely why it survives a read through.
+        </p>
+      </section>
+
+      <section class="section" aria-labelledby="faq-heading">
+        <p class="eyebrow">FAQ</p>
+        <h2 id="faq-heading">Questions</h2>
+
+        <div class="faq-item">
+          <h3>Why does ChatGPT use so many em dashes?</h3>
+          <p>Em dashes are common in edited, professional prose, which is
+             heavily represented in the text these models learned from. The
+             model picks up the habit and applies it far more often than a
+             human writer would, so the dash becomes one of the clearest
+             signals that a passage was machine written.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>What is the difference between an em dash, an en dash and a hyphen?</h3>
+          <p>A hyphen is the short one on your keyboard and joins words, as in
+             well-known. An en dash is slightly wider and marks ranges, as in
+             pages 10-20. An em dash is the widest and separates clauses in a
+             sentence. Only the hyphen has its own key, which is why the other
+             two arrive invisibly through copy and paste.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Will replacing em dashes change the meaning of my text?</h3>
+          <p>No. An em dash separates clauses, and a comma does the same job
+             with a softer break, so the sentence still reads correctly.
+             Choosing to remove the dash entirely leaves a single space behind
+             rather than deleting it outright, because deleting it would join
+             the words on either side together.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>What are invisible characters and why are they in my text?</h3>
+          <p>Zero width spaces, soft hyphens, non breaking spaces and direction
+             marks take up no visible room but are really there in the text.
+             They arrive through copy and paste and can break search, word
+             counts, CSV files and form validation. This tool strips them and
+             converts unusual spaces into ordinary ones.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Is my text uploaded anywhere?</h3>
+          <p>No. The cleaning runs in your own browser in JavaScript. Your text
+             is never sent to a server, never stored and never logged. You can
+             disconnect from the internet after the page loads and the tool
+             still works.</p>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="more-heading">
+        <p class="eyebrow">More free tools</p>
+        <h2 id="more-heading">Other cleanup tools</h2>
+        <ul class="cols cols--3">
+          <li class="col">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+              <path d="M3 9.5h18M3 15h18M9 4v16"></path>
+            </svg>
+            <h3><a href="/markdown-table-to-excel/">Markdown Table to Excel</a></h3>
+            <p>Turn a pasted ChatGPT table into a real .xlsx, .csv or tab
+               separated text for Excel and Google Sheets.</p>
+            <span class="col__cta" aria-hidden="true">
+              Open tool
+              <svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+            </span>
+          </li>
+          <li class="col">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"></path>
+              <path d="M14 3v5h5"></path>
+              <path d="M9 13h6M9 17h4"></path>
+            </svg>
+            <h3><a href="/ai-text-to-word/">AI Text to Word</a></h3>
+            <p>Convert markdown formatted AI output into a .docx with real
+               headings, lists, tables and code blocks.</p>
+            <span class="col__cta" aria-hidden="true">
+              Open tool
+              <svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+            </span>
+          </li>
+
+          <!-- ===================================================================
+               SCRIBER CARD. Ready to switch on after AdSense approval.
+               To make it live, delete the comment opener above this block and
+               the comment closer below it. Nothing else needs changing: it is
+               a third column in the list and the row is already built for 3.
+               Kept commented rather than hidden so crawlers never see a link
+               that visitors cannot.
+               ===================================================================
+          <li class="col">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+              <path d="m10.4 9.7 4.3 2.3-4.3 2.3z"></path>
+            </svg>
+            <h3><a href="https://scriber.video/" rel="noopener">Scriber, YouTube to text</a></h3>
+            <p>Paste a YouTube link and get a clean transcript in seconds.
+               Another tool I build, no signup needed.</p>
+            <span class="col__cta" aria-hidden="true">
+              Visit scriber.video
+              <svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+            </span>
+          </li>
+               =================================================================== -->
+        </ul>
+      </section>
+
+    </div><!-- /.layout__main -->
+
+    <aside class="layout__aside" aria-label="Advertisement">
+      <!-- AdSense: paste the 300x600 rail ad unit inside this container. -->
+      <div class="ad-slot ad-slot--rail" data-ad-slot="emdash-mid"></div>
+    </aside>
+    </div><!-- /.layout -->
+
+    <!-- AdSense: footer ad unit goes inside this container. -->
+    <div class="ad-slot ad-slot--footer" data-ad-slot="emdash-footer"></div>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap wrap--wide">
+    <div class="footer-cols">
+      <div class="footer-brand">
+        <a class="logo" href="/">
+          <svg width="22" height="22" viewBox="0 0 22 22" role="img" aria-label="AI Output Cleanup logo">
+            <rect width="22" height="22" rx="5" fill="#171717"></rect>
+            <rect x="5" y="5.6" width="6.5" height="2.4" rx="1.2" fill="#ffffff" opacity="0.45"></rect>
+            <rect x="13.2" y="5.6" width="3.8" height="2.4" rx="1.2" fill="#ffffff" opacity="0.45"></rect>
+            <rect x="5" y="9.8" width="12" height="2.4" rx="1.2" fill="#ffffff"></rect>
+            <rect x="5" y="14" width="12" height="2.4" rx="1.2" fill="#ffffff"></rect>
+          </svg>
+          <span>AI Output Cleanup</span>
+        </a>
+        <p>Small, free, private tools for the text your AI assistant hands you.</p>
+      </div>
+
+      <nav aria-labelledby="footer-tools">
+        <h2 id="footer-tools">Tools</h2>
+        <ul>
+          <li><a href="/markdown-table-to-excel/">Markdown Table to Excel</a></li>
+          <li><a href="/ai-text-to-word/">AI Text to Word</a></li>
+          <li><a href="/em-dash-remover/">Em Dash Remover</a></li>
+        </ul>
+      </nav>
+
+      <nav aria-labelledby="footer-site">
+        <h2 id="footer-site">Site</h2>
+        <ul>
+          <li><a href="/about/">About</a></li>
+          <li><a href="/privacy/">Privacy</a></li>
+          <li><a href="/terms/">Terms</a></li>
+          <li><a href="/contact/">Contact</a></li>
+          <li><a href="/impressum/">Impressum</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <p class="site-footer__meta">
+      &copy; <span id="year">2026</span> AI Output Cleanup. All processing happens
+      in your browser. Nothing you paste is uploaded.
+    </p>
+  </div>
+</footer>
+
+<aside id="cookie-banner" class="cookie-banner" hidden aria-label="Cookie notice">
+  <div class="cookie-banner__inner">
+    <p>
+      This site uses cookies for advertising. You can decline and keep using
+      every tool. See our <a href="/privacy/">privacy policy</a>.
+    </p>
+    <div class="btn-row">
+      <button type="button" class="btn btn--ghost" id="cookie-decline">Decline</button>
+      <button type="button" class="btn btn--primary" id="cookie-accept">Accept</button>
+    </div>
+  </div>
+</aside>
+
+<script src="/assets/js/site.js" defer></script>
+<script src="/assets/js/em-dash-remover.js" defer></script>
+</body>
+</html>
