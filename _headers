@@ -38,10 +38,19 @@
   Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:
   X-Robots-Tag: noindex, nofollow
 
-# Fingerprint-free asset paths, so cache conservatively but not forever.
-# Bump this once filenames are content hashed.
+# Asset filenames are not content hashed: site.js is always site.js. With a
+# long max-age a returning visitor keeps running old code for the rest of that
+# window after every deploy, which is confusing to debug and means the site is
+# briefly inconsistent with itself.
+#
+# no-cache does NOT mean "do not store". The browser keeps the file and asks
+# "has this changed?" on each request; the ETag answers 304 Not Modified and
+# nothing is re-downloaded. The cost is one small conditional request, and
+# changes are live immediately.
+#
+# Swap back to a long max-age once filenames carry a content hash.
 /assets/*
-  Cache-Control: public, max-age=3600, must-revalidate
+  Cache-Control: public, no-cache, must-revalidate
 
 /favicon.svg
   Cache-Control: public, max-age=604800
