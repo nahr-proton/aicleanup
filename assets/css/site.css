@@ -710,6 +710,39 @@ textarea[readonly]:hover { border-color: var(--line); }
 .doc-preview thead th { background: var(--line-2); font-weight: 600; }
 .doc-preview .table-scroll { margin-bottom: var(--space-3); }
 
+/* --- Next step suggestion -------------------------------------------------
+   Revealed only after the visitor has successfully used the tool. Hidden by
+   default so it never clutters the page for someone who has not finished, and
+   never competes with the tool itself for attention. */
+.next-step {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+  padding: var(--space-3) var(--space-4);
+  background: var(--line-2);
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--ink-2);
+  animation: next-step-in 0.35s ease both;
+}
+.next-step[hidden] { display: none; }
+.next-step .icon { color: var(--accent); margin-top: 2px; }
+.next-step strong { color: var(--ink); font-weight: 600; }
+.next-step a {
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+@keyframes next-step-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .next-step { animation: none; }
+}
+
 /* Copy button confirmation state. */
 .btn.is-done {
   background: var(--surface);

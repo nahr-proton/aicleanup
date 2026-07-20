@@ -248,6 +248,14 @@
     setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
   }
 
+  /* Reveals the "next step" suggestion, once, after the visitor has actually
+     succeeded at what they came to do. Deliberately not shown on page load:
+     someone who has not finished does not need to be sold another tool. */
+  function revealNextStep() {
+    var el = document.getElementById('next-step');
+    if (el) el.hidden = false;
+  }
+
   function initYear() {
     var el = document.getElementById('year');
     if (el) el.textContent = String(new Date().getFullYear());
@@ -273,6 +281,7 @@
     copyText: copyText,
     flashStatus: flashStatus,
     downloadBlob: downloadBlob,
+    revealNextStep: revealNextStep,
     consent: {
       get: readConsent,
       set: choose,

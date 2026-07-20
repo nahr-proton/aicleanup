@@ -189,6 +189,7 @@
       /* Copy has no direction, so it confirms with a state swap rather than
          a moving icon. */
       setCopyLabel(DONE_ICON, 'Copied', true);
+      window.AOC.revealNextStep();
       clearTimeout(copyTimer);
       copyTimer = setTimeout(function () {
         setCopyLabel(COPY_ICON, 'Copy cleaned text', false);

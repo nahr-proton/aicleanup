@@ -684,6 +684,7 @@
       return d.Packer.toBlob(doc).then(function (blob) {
         window.AOC.downloadBlob(blob, 'document.docx');
         say('Downloaded document.docx.');
+        window.AOC.revealNextStep();
       });
     })['catch'](function () {
       say('The Word library could not be loaded. Check your connection and try again.', true);

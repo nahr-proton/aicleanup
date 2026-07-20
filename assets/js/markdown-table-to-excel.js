@@ -395,6 +395,7 @@
     var name = tables.length > 1 ? 'table-' + (selected + 1) + '.csv' : 'table.csv';
     window.AOC.downloadBlob(blob, name);
     say('Downloaded ' + name + '.');
+    window.AOC.revealNextStep();
   }
 
   function downloadXLSX() {
@@ -417,6 +418,7 @@
       say(tables.length > 1
         ? 'Downloaded tables.xlsx with ' + tables.length + ' sheets.'
         : 'Downloaded tables.xlsx.');
+      window.AOC.revealNextStep();
     })['catch'](function () {
       say('The spreadsheet library could not be loaded. Check your connection, or use Download .csv which needs nothing extra.', true);
     })['then'](function () {
@@ -432,6 +434,7 @@
     var table = current();
     if (!table) return;
     window.AOC.copyText(toTSV(table)).then(function () {
+      window.AOC.revealNextStep();
       btnTsv.classList.add('is-done');
       btnTsv.querySelector('span').textContent = 'Copied, ready to paste';
       clearTimeout(copyTimer);
