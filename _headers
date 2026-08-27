@@ -8,13 +8,16 @@
   #
   #   cdnjs.cloudflare.com  SheetJS, loaded on demand for .xlsx downloads
   #   cdn.jsdelivr.net      docx, loaded on demand for .docx downloads
-  #   cloud.umami.is        cookieless analytics
+  #   cloud.umami.is        Umami analytics SCRIPT is loaded from here
+  #   gateway.umami.is      Umami analytics BEACONS are sent here. This is a
+  #                         different host from the script, and it must be in
+  #                         connect-src or every pageview is silently blocked.
   #
   # WHEN ENABLING ADSENSE, add to script-src and connect-src:
   #   https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net
   # and add to img-src and frame-src:
   #   https://*.google.com https://*.doubleclick.net https://*.googlesyndication.com
-  Content-Security-Policy: default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://cloud.umami.is; connect-src 'self' https://cloud.umami.is; style-src 'self'; img-src 'self' data:; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://cloud.umami.is; connect-src 'self' https://cloud.umami.is https://gateway.umami.is; style-src 'self'; img-src 'self' data:; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests
 
   # Stops the site being framed for clickjacking.
   X-Frame-Options: DENY
