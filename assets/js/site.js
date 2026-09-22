@@ -18,25 +18,26 @@
   var ADSENSE_CLIENT = '';
 
   /* ------------------------------------------------------------------------
-     UMAMI ANALYTICS
+     CLOUDFLARE WEB ANALYTICS
 
-     Cookieless, privacy focused page counting. It sets no cookies and writes
-     nothing to the visitor's device, so it needs no consent notice under the
-     ePrivacy rules and does not weaken the "no cookies" position.
+     Cookieless page counting. It sets no cookies and uses no local storage,
+     so it needs no consent notice under the ePrivacy rules and does not weaken
+     the "no cookies" position.
 
-     Fill both values in to switch it on. While either is empty, no analytics
-     script is requested at all.
+     Paste the token from the Cloudflare dashboard to switch it on (Analytics &
+     Logs > Web Analytics > this site > Manage site, the "token" value inside
+     the JS snippet). While it is empty, no analytics script is requested.
 
-       UMAMI_SRC        the script URL of your Umami instance
-                        e.g. 'https://analytics.example.com/script.js'
-       UMAMI_WEBSITE_ID the site UUID shown in the Umami dashboard
+     Cloudflare's "automatic setup" does not inject the beacon into sites
+     served by Workers static assets, which is why it is loaded here instead.
+     The CSP in _headers must allow static.cloudflareinsights.com (script) and
+     cloudflareinsights.com (data), or every beacon is silently blocked.
      ------------------------------------------------------------------------ */
-  var UMAMI_SRC = 'https://cloud.umami.is/script.js';
-  var UMAMI_WEBSITE_ID = 'de6953a3-1552-479d-a4cc-568175d5ec3f';
+  var CF_BEACON_TOKEN = '0530655a2819440d873293435f4f31c5';
 
   /* Only count traffic on the real domain, so local development and preview
      deployments never pollute the statistics. */
-  var UMAMI_DOMAINS = 'aicleanup.tools';
+  var ANALYTICS_HOST = 'aicleanup.tools';
 
   var CONSENT_KEY = 'aoc-cookie-consent';
   var ACCEPTED = 'accepted';
@@ -117,21 +118,27 @@
   }
 
   /* --- Analytics ----------------------------------------------------------
-     Deliberately not gated behind the cookie notice. Umami stores nothing on
-     the device, so there is no "access to information on a terminal device"
-     to consent to. It runs on legitimate interests instead, which is stated
-     in the privacy policy. */
+     Deliberately not gated behind the cookie notice. The beacon stores
+     nothing on the device, so there is no "access to information on a
+     terminal device" to consent to. It runs on legitimate interests instead,
+     which is stated in the privacy policy. */
+  function doNotTrack() {
+    var v = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+    return v === '1' || v === 'yes';
+  }
+
   function loadAnalytics() {
-    if (!UMAMI_SRC || !UMAMI_WEBSITE_ID) return;
+    if (!CF_BEACON_TOKEN) return;
+    if (location.hostname !== ANALYTICS_HOST) return;
+    /* Cloudflare's beacon does not check Do Not Track itself, so it is
+       honoured here: a visitor who asked not to be tracked is never counted. */
+    if (doNotTrack()) return;
 
     var s = document.createElement('script');
-    s.src = UMAMI_SRC;
-    s.defer = true;
-    s.setAttribute('data-website-id', UMAMI_WEBSITE_ID);
-    /* Honour the browser's Do Not Track signal even though nothing here
-       tracks people across sites. */
-    s.setAttribute('data-do-not-track', 'true');
-    if (UMAMI_DOMAINS) s.setAttribute('data-domains', UMAMI_DOMAINS);
+    s.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+    /* Matches the snippet Cloudflare currently issues. */
+    s.type = 'module';
+    s.setAttribute('data-cf-beacon', JSON.stringify({ token: CF_BEACON_TOKEN }));
     document.head.appendChild(s);
   }
 

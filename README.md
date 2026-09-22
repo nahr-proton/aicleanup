@@ -59,14 +59,20 @@ All switches live at the top of `assets/js/site.js`.
 ### Analytics
 
 ```js
-var UMAMI_SRC        = 'https://cloud.umami.is/script.js';
-var UMAMI_WEBSITE_ID = 'de6953a3-1552-479d-a4cc-568175d5ec3f';
-var UMAMI_DOMAINS    = 'aicleanup.tools';
+var CF_BEACON_TOKEN = '...';            // from the Cloudflare Web Analytics snippet
+var ANALYTICS_HOST  = 'aicleanup.tools';
 ```
 
-Cookieless, so it needs no consent banner. `UMAMI_DOMAINS` keeps local and
-preview traffic out of the statistics. Leaving either of the first two empty
-disables analytics entirely.
+Cloudflare Web Analytics, loaded manually: Cloudflare's "automatic setup" does
+not inject the beacon into sites served by Workers static assets. Cookieless,
+so it needs no consent banner. Visitors sending Do Not Track are not counted,
+and `ANALYTICS_HOST` keeps local and preview traffic out of the statistics. An
+empty token disables analytics entirely.
+
+The CSP in `_headers` must allow `static.cloudflareinsights.com` in
+`script-src` and `cloudflareinsights.com` in `connect-src`. The data goes to a
+different host from the script, and a missing `connect-src` entry blocks every
+pageview silently, with no visible error on the page.
 
 ### Advertising, currently off
 
