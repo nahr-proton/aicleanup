@@ -17,3 +17,9 @@ node_modules/
 
 # Local tooling state, not project config
 .claude/
+
+# Cloudflare wrangler cache: holds the account id and name
+.wrangler/
+
+# Separate project (personal site), not part of this repo
+marcosnahr/

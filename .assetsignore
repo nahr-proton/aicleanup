@@ -10,3 +10,7 @@ wrangler.jsonc
 # Local build tool for the social share images. Not needed in production, and
 # excluding it is cleaner than relying on robots.txt and a noindex tag.
 _dev
+
+# Never serve these, even if they end up in the directory
+.wrangler
+marcosnahr
