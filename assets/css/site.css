@@ -241,6 +241,12 @@ main { display: block; padding-bottom: var(--space-8); }
 
 .section { margin-top: var(--space-8); }
 .section > h2:first-child { margin-top: 0; }
+/* The small label belongs to the heading right under it, so the heading's
+   own top margin would only push them apart. */
+.eyebrow + h2 { margin-top: 0; }
+/* The first section after the hero follows on closely, so the tool list on
+   the home page starts above the fold on a laptop screen. */
+.hero + .wrap > .section:first-child { margin-top: var(--space-5); }
 
 /* Small uppercase section label, used above the big headings. */
 .eyebrow {
@@ -376,7 +382,7 @@ main { display: block; padding-bottom: var(--space-8); }
 }
 
 @media (min-width: 1000px) {
-  .hero { padding-block: var(--space-8) var(--space-7); }
+  .hero { padding-block: var(--space-7) var(--space-5); }
   .hero__inner {
     display: grid;
     grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
@@ -418,32 +424,31 @@ main { display: block; padding-bottom: var(--space-8); }
    A quiet ask under the privacy note on the home page. Hidden in the HTML and
    shown by site.js only once a donation link is configured, so the site never
    shows a button that goes nowhere. */
+/* One compact row, so it does not push the tool list below the fold. The
+   button drops under the text only when the row gets too narrow. */
 .support {
   display: flex;
-  align-items: flex-start;
-  gap: var(--space-3);
-  margin-top: var(--space-5);
-  padding: var(--space-4) var(--space-5);
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  margin-top: var(--space-3);
+  padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4);
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
-  max-width: 46ch;
+  width: fit-content;
+  max-width: 100%;
 }
 .support[hidden] { display: none; }
-.support > .icon { color: var(--accent); margin-top: 2px; }
+.support > .icon { color: var(--accent); width: 18px; height: 18px; }
 .support__text {
-  font-size: 0.9rem;
-  line-height: 1.5;
+  flex: 1 1 200px;
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.45;
   color: var(--ink-2);
-  margin-bottom: var(--space-3);
 }
 .support__text strong { color: var(--ink); font-weight: 600; }
-.support__fine {
-  margin-top: var(--space-3);
-  font-size: 0.78rem;
-  line-height: 1.45;
-  color: var(--ink-3);
-}
 
 /* --- Column list with thin dividers ---------------------------------------
    Replaces boxed cards. Small icon, title, muted description, action.
