@@ -1,8 +1,9 @@
 /* ==========================================================================
    AI Output Cleanup — shared stylesheet
-   Mobile first. Light mode. System fonts only. No web fonts.
+   Mobile first. Light and dark mode, following the device setting.
+   System fonts only. No web fonts.
    Visual direction: airy, minimal, thin dividers, small stroke icons,
-   pill shaped controls, near-black primary actions.
+   pill shaped controls, teal primary actions.
    ========================================================================== */
 
 /* --- Reset ---------------------------------------------------------------- */
@@ -22,23 +23,59 @@ img, svg { max-width: 100%; display: block; }
 
 button, input, select, textarea { font: inherit; color: inherit; }
 
+/* --- Colour palette -------------------------------------------------------
+   The stone and teal scales from Open Props (open-props.style), copied in as
+   plain values so the site needs no extra stylesheet download. Shade 0 is the
+   palest, 12 the darkest. Open Props is MIT licensed, Copyright (c) 2021
+   Adam Argyle. Components below never use these directly, only the role
+   tokens that follow, so light and dark mode can swap them in one place. */
+:root {
+  --stone-0:  #f8fafb;  --stone-1:  #f2f4f6;  --stone-2:  #ebedef;
+  --stone-3:  #e0e4e5;  --stone-4:  #d1d6d8;  --stone-5:  #b1b6b9;
+  --stone-6:  #979b9d;  --stone-7:  #7e8282;  --stone-8:  #666968;
+  --stone-9:  #50514f;  --stone-10: #3a3a37;  --stone-11: #252521;
+  --stone-12: #121210;
+
+  --teal-0:  #e6fcf5;  --teal-1:  #c3fae8;  --teal-2:  #96f2d7;
+  --teal-3:  #63e6be;  --teal-4:  #38d9a9;  --teal-5:  #20c997;
+  --teal-6:  #12b886;  --teal-7:  #0ca678;  --teal-8:  #099268;
+  --teal-9:  #087f5b;  --teal-10: #066649;  --teal-11: #054d37;
+  --teal-12: #033325;
+}
+
 /* --- Design tokens -------------------------------------------------------- */
 :root {
-  /* Warm neutral scale */
-  --ink:        #171717;
-  --ink-2:      #5c5a57;
-  --ink-3:      #8f8c88;
-  --line:       #e8e5e1;
-  --line-2:     #f3f1ee;
+  color-scheme: light dark;
+
+  /* Neutral scale. Every text colour clears WCAG AA (4.5:1) on the canvas,
+     including the faintest one. */
+  --ink:        var(--stone-12);
+  --ink-2:      var(--stone-9);
+  --ink-3:      var(--stone-8);
+  --line:       var(--stone-3);
+  --line-2:     var(--stone-1);
   --surface:    #ffffff;
-  --canvas:     #fbfaf9;
+  --surface-ro: #fcfdfd;   /* read only output, a hair off the surface */
+  --canvas:     var(--stone-0);
 
-  /* Single accent — warm clay. Used sparingly: links, focus, small marks. */
-  --accent:     #b8502a;
-  --accent-dk:  #94401f;
-  --accent-lt:  #fbf0eb;
+  /* Single accent: teal. Links, primary buttons, focus, small marks.
+     Shade 9 rather than 7 so white button text passes AA. */
+  --accent:     var(--teal-9);
+  --accent-dk:  var(--teal-10);
+  --accent-lt:  var(--teal-0);
+  --on-accent:  #ffffff;   /* text on a filled accent background */
+  --ring:       rgba(8, 127, 91, 0.16);
+  --mark:       var(--teal-9);   /* logo tile */
 
-  --danger:     #a3352b;
+  --danger:     #c92a2a;
+
+  /* Atmosphere: the page glow, translucent header, shadows. */
+  --glow-a:     rgba(255, 255, 255, 1);
+  --glow-b:     rgba(230, 252, 245, 0.7);
+  --header-bg:  rgba(248, 250, 251, 0.82);
+  --ghost:      rgba(255, 255, 255, 0.5);
+  --shadow:     rgba(18, 18, 16, 0.08);
+  --shadow-lg:  rgba(18, 18, 16, 0.1);
 
   --radius:     10px;
   --radius-lg:  16px;
@@ -63,6 +100,39 @@ button, input, select, textarea { font: inherit; color: inherit; }
           Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
 }
 
+/* Dark mode, automatic. Follows the visitor's device setting, no switch.
+   Only role tokens change here, so no component needs its own dark rule. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink:        var(--stone-1);
+    --ink-2:      var(--stone-4);
+    --ink-3:      var(--stone-5);
+    --line:       var(--stone-9);
+    --line-2:     var(--stone-10);
+    --surface:    var(--stone-11);
+    --surface-ro: #1c1c19;   /* between stone 11 and 12 */
+    --canvas:     var(--stone-12);
+
+    /* A lighter teal reads on the dark canvas; button text flips to the
+       darkest teal so it still passes AA (7.8:1). */
+    --accent:     var(--teal-4);
+    --accent-dk:  var(--teal-3);
+    --accent-lt:  var(--teal-12);
+    --on-accent:  var(--teal-12);
+    --ring:       rgba(56, 217, 169, 0.22);
+    --mark:       var(--teal-7);
+
+    --danger:     #ff8787;
+
+    --glow-a:     rgba(56, 217, 169, 0.06);
+    --glow-b:     rgba(255, 255, 255, 0.03);
+    --header-bg:  rgba(18, 18, 16, 0.82);
+    --ghost:      rgba(255, 255, 255, 0.02);
+    --shadow:     rgba(0, 0, 0, 0.4);
+    --shadow-lg:  rgba(0, 0, 0, 0.5);
+  }
+}
+
 /* --- Base ----------------------------------------------------------------- */
 body {
   font-family: var(--sans);
@@ -70,10 +140,10 @@ body {
   line-height: 1.65;
   color: var(--ink);
   background-color: var(--canvas);
-  /* Barely there warm glow so the page is not a flat slab of grey. */
+  /* Barely there glow so the page is not a flat slab of grey. */
   background-image:
-    radial-gradient(900px 520px at 12% -10%, #ffffff 0%, rgba(255,255,255,0) 62%),
-    radial-gradient(760px 460px at 92% 4%, #f5f2ed 0%, rgba(245,242,237,0) 58%);
+    radial-gradient(900px 520px at 12% -10%, var(--glow-a) 0%, transparent 62%),
+    radial-gradient(760px 460px at 92% 4%, var(--glow-b) 0%, transparent 58%);
   background-repeat: no-repeat;
   background-attachment: fixed;
   -webkit-font-smoothing: antialiased;
@@ -118,7 +188,7 @@ code {
 .icon--sm { width: 16px; height: 16px; }
 
 :focus-visible {
-  outline: 2px solid var(--ink);
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
   border-radius: 4px;
 }
@@ -155,12 +225,12 @@ main { display: block; padding-bottom: var(--space-8); }
   left: -9999px;
   top: 0;
   background: var(--ink);
-  color: #fff;
+  color: var(--canvas);
   padding: var(--space-3) var(--space-4);
   z-index: 100;
   border-radius: 0 0 var(--radius) 0;
 }
-.skip-link:focus { left: 0; color: #fff; }
+.skip-link:focus { left: 0; color: var(--canvas); }
 
 /* --- Header --------------------------------------------------------------- */
 .site-header { padding-block: var(--space-4); }
@@ -169,7 +239,7 @@ main { display: block; padding-bottom: var(--space-8); }
     position: sticky;
     top: 0;
     z-index: 20;
-    background: rgba(251, 250, 249, 0.82);
+    background: var(--header-bg);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
   }
@@ -200,6 +270,10 @@ main { display: block; padding-bottom: var(--space-8); }
 }
 .logo:hover { color: var(--ink); border-color: var(--ink-3); }
 .logo svg { flex: 0 0 auto; }
+/* The logo tile is drawn black in the HTML (so it still looks right without
+   this stylesheet). A CSS fill outranks the attribute, so the tile takes the
+   accent and follows dark mode without editing every page. */
+.logo svg rect:first-child { fill: var(--mark); }
 
 .site-nav ul {
   display: flex;
@@ -340,7 +414,7 @@ main { display: block; padding-bottom: var(--space-8); }
   /* Slight overshoot easing so the nudge feels driven, not linear. */
   transition: transform 0.22s cubic-bezier(0.22, 0.9, 0.28, 1.2);
 }
-.col:hover .col__cta { border-color: var(--ink); background: var(--ink); color: #fff; }
+.col:hover .col__cta { border-color: var(--accent); background: var(--accent); color: var(--on-accent); }
 
 /* Arrow nudges right on hover, keyboard focus, and press. focus-within covers
    the stretched heading link so keyboard users get the same feedback. */
@@ -391,8 +465,8 @@ textarea {
 textarea:hover { border-color: var(--ink-3); }
 textarea:focus {
   outline: none;
-  border-color: var(--ink);
-  box-shadow: 0 0 0 3px rgba(23, 23, 23, 0.06);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--ring);
 }
 textarea::placeholder { color: var(--ink-3); opacity: 1; }
 
@@ -422,11 +496,11 @@ textarea::placeholder { color: var(--ink-3); opacity: 1; }
 .btn .icon { width: 16px; height: 16px; }
 
 .btn--primary {
-  background: var(--ink);
-  color: #fff;
-  border-color: var(--ink);
+  background: var(--accent);
+  color: var(--on-accent);
+  border-color: var(--accent);
 }
-.btn--primary:hover { background: #000; border-color: #000; color: #fff; }
+.btn--primary:hover { background: var(--accent-dk); border-color: var(--accent-dk); color: var(--on-accent); }
 
 .btn--ghost {
   background: var(--surface);
@@ -479,7 +553,7 @@ textarea::placeholder { color: var(--ink-3); opacity: 1; }
   margin: 0;
   cursor: pointer;
 }
-.opt input { margin-top: 3px; width: 16px; height: 16px; accent-color: var(--ink); }
+.opt input { margin-top: 3px; width: 16px; height: 16px; accent-color: var(--accent); }
 
 .status {
   margin-top: var(--space-3);
@@ -509,7 +583,7 @@ textarea::placeholder { color: var(--ink-3); opacity: 1; }
 .field__head label, .field__head .label { margin-bottom: 0; }
 .field__hint { font-size: 0.78rem; color: var(--ink-3); }
 
-textarea[readonly] { background: #fdfdfc; color: var(--ink-2); }
+textarea[readonly] { background: var(--surface-ro); color: var(--ink-2); }
 textarea[readonly]:hover { border-color: var(--line); }
 
 /* Option blocks side by side on desktop. */
@@ -633,7 +707,7 @@ textarea[readonly]:hover { border-color: var(--line); }
   background: var(--surface);
   color: var(--ink);
   font-weight: 500;
-  box-shadow: 0 1px 2px rgba(23, 23, 23, 0.08);
+  box-shadow: 0 1px 2px var(--shadow);
 }
 
 /* --- Formatted document preview -------------------------------------------
@@ -758,7 +832,7 @@ textarea[readonly]:hover { border-color: var(--line); }
   border-radius: var(--radius-lg);
   color: var(--ink-3);
   font-size: 0.9rem;
-  background: rgba(255, 255, 255, 0.5);
+  background: var(--ghost);
 }
 .empty-state[hidden] { display: none; }
 .empty-state p { margin-bottom: var(--space-3); color: var(--ink-3); }
@@ -940,7 +1014,7 @@ textarea[readonly]:hover { border-color: var(--line); }
   padding: var(--space-4) var(--space-5);
   font-size: 0.86rem;
   line-height: 1.5;
-  box-shadow: 0 8px 30px rgba(23, 23, 23, 0.1);
+  box-shadow: 0 8px 30px var(--shadow-lg);
 }
 .cookie-banner[hidden] { display: none; }
 .cookie-banner__inner {
