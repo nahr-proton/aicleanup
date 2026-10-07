@@ -1,6 +1,7 @@
 /* ==========================================================================
    AI Output Cleanup — shared stylesheet
-   Mobile first. Light and dark mode, following the device setting.
+   Mobile first. Light and dark mode, following the device setting unless
+   the visitor picks one with the header switch.
    System fonts only. No web fonts.
    Visual direction: airy, minimal, thin dividers, small stroke icons,
    pill shaped controls, teal primary actions.
@@ -100,10 +101,16 @@ button, input, select, textarea { font: inherit; color: inherit; }
           Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
 }
 
-/* Dark mode, automatic. Follows the visitor's device setting, no switch.
-   Only role tokens change here, so no component needs its own dark rule. */
+/* Dark mode. Follows the device setting until the visitor uses the header
+   switch, which sets data-theme on <html> (see theme.js). Only role tokens
+   change here, so no component needs its own dark rule.
+   The token list appears twice, once per trigger, because plain CSS cannot
+   share one block between a media query and a selector. Keep them identical. */
+:root[data-theme="light"] { color-scheme: light; }
+
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
     --ink:        var(--stone-1);
     --ink-2:      var(--stone-4);
     --ink-3:      var(--stone-5);
@@ -131,6 +138,34 @@ button, input, select, textarea { font: inherit; color: inherit; }
     --shadow:     rgba(0, 0, 0, 0.4);
     --shadow-lg:  rgba(0, 0, 0, 0.5);
   }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --ink:        var(--stone-1);
+  --ink-2:      var(--stone-4);
+  --ink-3:      var(--stone-5);
+  --line:       var(--stone-9);
+  --line-2:     var(--stone-10);
+  --surface:    var(--stone-11);
+  --surface-ro: #1c1c19;
+  --canvas:     var(--stone-12);
+
+  --accent:     var(--teal-4);
+  --accent-dk:  var(--teal-3);
+  --accent-lt:  var(--teal-12);
+  --on-accent:  var(--teal-12);
+  --ring:       rgba(56, 217, 169, 0.22);
+  --mark:       var(--teal-7);
+
+  --danger:     #ff8787;
+
+  --glow-a:     rgba(56, 217, 169, 0.06);
+  --glow-b:     rgba(255, 255, 255, 0.03);
+  --header-bg:  rgba(18, 18, 16, 0.82);
+  --ghost:      rgba(255, 255, 255, 0.02);
+  --shadow:     rgba(0, 0, 0, 0.4);
+  --shadow-lg:  rgba(0, 0, 0, 0.5);
 }
 
 /* --- Base ----------------------------------------------------------------- */
@@ -273,7 +308,36 @@ main { display: block; padding-bottom: var(--space-8); }
 /* The logo tile is drawn black in the HTML (so it still looks right without
    this stylesheet). A CSS fill outranks the attribute, so the tile takes the
    accent and follows dark mode without editing every page. */
-.logo svg rect:first-child { fill: var(--mark); }
+.logo svg rect:first-child,
+.hero__mark rect:first-child { fill: var(--mark); }
+
+/* Light and dark switch, added to the header by theme.js. Same pill
+   language as the logo chip. */
+/* On phones the nav wraps onto its own row, so the switch moves up beside
+   the logo instead of ending up alone on a third line. From 900px everything
+   fits on one row and the switch sits at the far right. */
+.theme-toggle { order: 1; margin-left: auto; }
+.site-nav { order: 2; flex-basis: 100%; }
+@media (min-width: 900px) {
+  .site-nav { order: 0; flex-basis: auto; margin-left: auto; }
+  .theme-toggle { order: 0; margin-left: 0; }
+}
+.theme-toggle {
+  display: inline-grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  color: var(--ink-2);
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.theme-toggle:hover { border-color: var(--ink-3); color: var(--ink); }
+.theme-toggle .icon { transition: transform 0.3s cubic-bezier(0.22, 0.9, 0.28, 1.2); }
+.theme-toggle:hover .icon { transform: rotate(-15deg); }
 
 .site-nav ul {
   display: flex;
@@ -349,6 +413,37 @@ main { display: block; padding-bottom: var(--space-8); }
   cursor: default;
 }
 .privacy-note .icon { color: var(--accent); }
+
+/* --- Donation box ---------------------------------------------------------
+   A quiet ask under the privacy note on the home page. Hidden in the HTML and
+   shown by site.js only once a donation link is configured, so the site never
+   shows a button that goes nowhere. */
+.support {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+  padding: var(--space-4) var(--space-5);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  max-width: 46ch;
+}
+.support[hidden] { display: none; }
+.support > .icon { color: var(--accent); margin-top: 2px; }
+.support__text {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--ink-2);
+  margin-bottom: var(--space-3);
+}
+.support__text strong { color: var(--ink); font-weight: 600; }
+.support__fine {
+  margin-top: var(--space-3);
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--ink-3);
+}
 
 /* --- Column list with thin dividers ---------------------------------------
    Replaces boxed cards. Small icon, title, muted description, action.
@@ -1069,4 +1164,5 @@ textarea[readonly]:hover { border-color: var(--line); }
   .btn:focus-visible .icon,
   .btn:active .icon { transform: none; }
   .btn:active:not([disabled]) { transform: none; }
+  .theme-toggle:hover .icon { transform: none; }
 }

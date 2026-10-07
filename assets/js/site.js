@@ -39,6 +39,16 @@
      deployments never pollute the statistics. */
   var ANALYTICS_HOST = 'aicleanup.tools';
 
+  /* ------------------------------------------------------------------------
+     DONATIONS
+
+     Paste the Ko-fi page link here, for example 'https://ko-fi.com/name'.
+     While it is empty the donation box on the home page stays hidden. The
+     box and the privacy policy both name Ko-fi, so update them too if the
+     service ever changes.
+     ------------------------------------------------------------------------ */
+  var DONATE_URL = 'https://ko-fi.com/aicleanup';
+
   var CONSENT_KEY = 'aoc-cookie-consent';
   var ACCEPTED = 'accepted';
   var DECLINED = 'declined';
@@ -263,6 +273,15 @@
     if (el) el.hidden = false;
   }
 
+  function initSupport() {
+    if (!/^https:\/\//.test(DONATE_URL)) return;
+    var box = document.getElementById('support');
+    var link = document.getElementById('support-link');
+    if (!box || !link) return;
+    link.href = DONATE_URL;
+    box.hidden = false;
+  }
+
   function initYear() {
     var el = document.getElementById('year');
     if (el) el.textContent = String(new Date().getFullYear());
@@ -272,6 +291,7 @@
     loadAnalytics();
     initBanner();
     initConsentLink();
+    initSupport();
     initYear();
     /* Returning visitors who already accepted get their ads without being
        asked again. */
